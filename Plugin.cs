@@ -19,7 +19,7 @@ public class Plugin : BaseUnityPlugin
         XConfig.AllConfig(Config);
 
         if (XConfig.AlwayUpdateCursor.Value)
-            harmony.PatchAll(typeof(Patches.UpdateCursor));
+            harmony.PatchAll(typeof(Patches.AlwayUpdateCursor));
 
         if (!XConfig.RefreshRate.Value.Equals(0))
             harmony.PatchAll(typeof(Patches.RefreshRate));
