@@ -20,8 +20,12 @@ public class Plugin : BaseUnityPlugin
 
         if (XConfig.AlwayUpdateCursor.Value)
             harmony.PatchAll(typeof(Patches.UpdateCursor));
+
         if (!XConfig.RefreshRate.Value.Equals(0))
             harmony.PatchAll(typeof(Patches.TargetFPS));
+
+        if (XConfig.ActivePointerColor.Value)
+            harmony.PatchAll(typeof(Patches.ActivePointerColor));
 
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }

@@ -12,6 +12,7 @@ namespace xsoverlay_framerate_overload
     {
         public static ConfigEntry<int> RefreshRate;
         public static ConfigEntry<bool> AlwayUpdateCursor;
+        public static ConfigEntry<bool> ActivePointerColor;
 
         public static void AllConfig(ConfigFile cfg)
         {
@@ -23,6 +24,7 @@ A value less than your VR Headset means no effect.");
             AlwayUpdateCursor = cfg.Bind("General", "AlwayUpdateCursor", true, @"By default, XSOverlay displays the capture Desktop before sending new cursor position data to the actual cursor,
 which means you are always seeing the previous cursor of the old frame.
 Enable this to update the actual Desktop cursor before getting captured in the next frame");
+            ActivePointerColor = cfg.Bind("General", "ActivePointerColor", true, @"Determine the active hand Pointer by color.");
         }
     }
 }
