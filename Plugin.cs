@@ -27,6 +27,9 @@ public class Plugin : BaseUnityPlugin
         if (XConfig.ActivePointerColor.Value)
             harmony.PatchAll(typeof(Patches.ActivePointerColor));
 
+        if (XConfig.AlwayHideCursor.Value)
+            harmony.PatchAll(typeof(Patches.AlwayHideCursor));
+
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }
 
