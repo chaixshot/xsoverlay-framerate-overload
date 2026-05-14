@@ -1,0 +1,402 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>xsoverlay_framerate_overload</AssemblyName>
+    <Product>XSOverlay Font Changer</Product>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>xsoverlay_framerate_overload</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="Patches\UpdateCursor.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Accessibility">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Accessibility.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Backtrace.Unity">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Backtrace.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="com.lachee.discordrpc.runtime">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\com.lachee.discordrpc.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="DiscordRPC">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\DiscordRPC.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Facepunch.Steamworks.Win64">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Facepunch.Steamworks.Win64.dll</HintPath>
+    </Reference>
+    <Reference Include="HidSharp">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\HidSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LibreHardwareMonitorLib">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\LibreHardwareMonitorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Mixpanel">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Mixpanel.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RAMSPDToolkit-NDD">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\RAMSPDToolkit-NDD.dll</HintPath>
+    </Reference>
+    <Reference Include="SteamVR">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\SteamVR.dll</HintPath>
+    </Reference>
+    <Reference Include="SteamVR_Actions">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\SteamVR_Actions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration.Install">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Configuration.Install.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Data.DataSetExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.EnterpriseServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Runtime.Serialization.Formatters.Soap.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Internals">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.ServiceModel.Internals.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Transactions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UniTask.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.Addressables">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UniTask.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.DOTween">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UniTask.DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.Linq">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UniTask.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.TextMeshPro">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UniTask.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.AI.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.LowLevel.ILSupport">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.MemoryProfiler">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.MemoryProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Profiling.Core">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.Profiling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ContentLoadModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ContentLoadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DSPGraphModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.DSPGraphModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GIModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.GIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.NVIDIAModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.NVIDIAModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PropertiesModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.PropertiesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.StreamingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreFontEngineModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreTextEngineModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityCurlModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityCurlModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityTestProtocolModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VFXModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VirtualTexturingModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.VirtualTexturingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="uOSC.Runtime">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\uOSC.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="uTouchInjection.Runtime">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\uTouchInjection.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Valve.Newtonsoft.Json">
+      <HintPath>D:\Steam\steamapps\common\XSOverlay_Beta\XSOverlay_Data\Managed\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="taskkill /F /T /im XSOverlay.exe /FI &quot;STATUS eq RUNNING&quot;&#xD;&#xA;taskkill /F /T /im &quot;Vuplex WebView.vuplex&quot; /FI &quot;STATUS eq RUNNING&quot;" />
+  </Target>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="move &quot;$(SolutionDir)bin\Debug\net48\xsoverlay_framerate_overload.dll&quot; &quot;D:\Steam\steamapps\common\XSOverlay_Beta\BepInEx\plugins&quot;&#xD;&#xA;move &quot;$(SolutionDir)bin\Debug\net48\xsoverlay_framerate_overload.pdb&quot; &quot;D:\Steam\steamapps\common\XSOverlay_Beta\BepInEx\plugins&quot;" />
+  </Target>
+</Project>
