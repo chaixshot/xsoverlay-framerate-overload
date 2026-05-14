@@ -1,9 +1,9 @@
-﻿namespace xsoverlay_framerate_overload
+﻿namespace xsoverlay_tweak
 {
     internal class MyPluginInfo
     {
-        public const string PLUGIN_GUID = "xsoverlay.framerate.overload";
-        public const string PLUGIN_NAME = "XSOverlay FrameRate Overload";
+        public const string PLUGIN_GUID = "xsoverlay.tweak";
+        public const string PLUGIN_NAME = "XSOverlay Tweak";
         public const string PLUGIN_VERSION = "1.0.0";
     }
 }

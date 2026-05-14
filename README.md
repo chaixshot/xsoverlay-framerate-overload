@@ -1,2 +1,2 @@
-# xsoverlay-framerate-overload
+# xsoverlay-tweak
 XSOverlay custom frame rate

@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 
-namespace xsoverlay_framerate_overload
+namespace xsoverlay_tweak
 {
     internal class Utils
     {

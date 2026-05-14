@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.6.11806.211 stable
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xsoverlay-framerate-overload", "xsoverlay-framerate-overload.csproj", "{C9DC2BC9-FEFD-A21A-5BFB-58A86C80D2EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xsoverlay-tweak", "xsoverlay-tweak.csproj", "{C9DC2BC9-FEFD-A21A-5BFB-58A86C80D2EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

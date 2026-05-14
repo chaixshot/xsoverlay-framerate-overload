@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace xsoverlay_framerate_overload.Patches
+namespace xsoverlay_tweak.Patches
 {
     internal class AlwayHideCursor
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using XSOverlay;
 
-namespace xsoverlay_framerate_overload.Patches
+namespace xsoverlay_tweak.Patches
 {
     [HarmonyPatch(typeof(Raycaster))]
     internal class ActivePointerColor
