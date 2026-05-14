@@ -4,7 +4,7 @@ using XSOverlay;
 
 namespace xsoverlay_framerate_overload.Patches
 {
-    internal class TargetFPS
+    internal class RefreshRate
     {
         /*[HarmonyPatch(typeof(Unity_Overlay), "DetermineOverlayFramerate")]
         [HarmonyPostfix]
@@ -15,7 +15,7 @@ namespace xsoverlay_framerate_overload.Patches
             __instance.ActiveUpdateRateFPS = XConfig.RefreshRate.Value;
         }*/
 
-        [HarmonyPatch(typeof(Unity_Overlay), "UpdateTexture")]
+        /*[HarmonyPatch(typeof(Unity_Overlay), "UpdateTexture")]
         [HarmonyPrefix]
         public static bool UpdateTexture(Unity_Overlay __instance, ref int ___UpdateRateFPS)
         {
@@ -24,7 +24,7 @@ namespace xsoverlay_framerate_overload.Patches
             ___UpdateRateFPS = -1;
 
             return true;
-        }
+        }*/
 
         [HarmonyPatch(typeof(DeviceManager), "GetHMDRefreshRate")]
         [HarmonyPrefix]

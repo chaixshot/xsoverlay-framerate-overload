@@ -22,7 +22,7 @@ public class Plugin : BaseUnityPlugin
             harmony.PatchAll(typeof(Patches.UpdateCursor));
 
         if (!XConfig.RefreshRate.Value.Equals(0))
-            harmony.PatchAll(typeof(Patches.TargetFPS));
+            harmony.PatchAll(typeof(Patches.RefreshRate));
 
         if (XConfig.ActivePointerColor.Value)
             harmony.PatchAll(typeof(Patches.ActivePointerColor));
