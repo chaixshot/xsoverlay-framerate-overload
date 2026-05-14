@@ -22,16 +22,23 @@ namespace xsoverlay_tweak.Patches
         {
             if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
 
-            // Remove listener from overlay update 
-            var SyncedOverlayUpdate = AccessTools.Method(typeof(Raycaster), "SyncedOverlayUpdate");
-            var handler = (Action<Unity_Overlay>)Delegate.CreateDelegate(typeof(Action<Unity_Overlay>), __instance, SyncedOverlayUpdate);
-            XSOEventSystem.OnUpdatedOverlay -= handler;
+            RemoveUpdatedOverlay(__instance);
 
+            var SyncedOverlayUpdate = AccessTools.Method(typeof(Raycaster), "SyncedOverlayUpdate");
             _handArray.Add(new HandData
             {
                 Instance = __instance,
                 SyncedOverlayUpdate = AccessTools.MethodDelegate<SyncedUpdateDelegate>(SyncedOverlayUpdate)
             });
+        }
+
+        [HarmonyPatch("UnsubscribeFromEvents")]
+        [HarmonyPostfix]
+        public static void UnsubscribeFromEvents(Raycaster __instance)
+        {
+            if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
+
+            RemoveUpdatedOverlay(__instance);
         }
 
         [HarmonyPatch("Update")]
@@ -52,6 +59,14 @@ namespace xsoverlay_tweak.Patches
                 // Invoke the delegate stored in the array
                 data.SyncedOverlayUpdate?.Invoke(data.Instance, new Unity_Overlay());
             }
+        }
+
+        private static void RemoveUpdatedOverlay(Raycaster __instance)
+        {
+            // Remove listener from overlay update 
+            var SyncedOverlayUpdate = AccessTools.Method(typeof(Raycaster), "SyncedOverlayUpdate");
+            var handler = (Action<Unity_Overlay>)Delegate.CreateDelegate(typeof(Action<Unity_Overlay>), __instance, SyncedOverlayUpdate);
+            XSOEventSystem.OnUpdatedOverlay -= handler;
         }
     }
 }
