@@ -11,7 +11,7 @@ namespace xsoverlay_tweak
 
         public static ConfigEntry<bool> ActivePointerColor;
         public static ConfigEntry<float> ActivePointerOpacity;
-        public static ConfigEntry<int> PointerScale;
+        public static ConfigEntry<float> PointerScaleMultiply;
         public static ConfigEntry<bool> PointerDoubleClickDelay;
         public static ConfigEntry<bool> PhysicalMouseDetector;
 
@@ -37,8 +37,7 @@ Enable this to update the actual Desktop cursor before getting capture in the ne
             //?? Pointer
             ActivePointerColor = cfg.Bind("Pointer", "ActivePointerColor", true, "Determine the activated hand Pointer by red color.");
             ActivePointerOpacity = cfg.Bind("Pointer", "ActivePointerOpacity", 0.5f, "Determine the deactivated hand Pointer by opacity.");
-            PointerScale = cfg.Bind("Pointer", "PointerScale", 0, @"Change the Pointer scale over then 100% in common setting.
-A value less then 100 means no effect.");
+            PointerScaleMultiply = cfg.Bind("Pointer", "Multiply", 1f, "Multiply the Pointer scale from the common setting.");
             PointerDoubleClickDelay = cfg.Bind("Pointer", "PointerDoubleClickDelay", true, "Apply a Double Click Delay setting to the Pointer itself, not just the cursor.");
 
             //?? Mouse Navigation

@@ -39,7 +39,7 @@ public class Plugin : BaseUnityPlugin
         if (XConfig.PhysicalMouseDetector.Value)
             harmony.PatchAll(typeof(Patches.PhysicalMouseDetector));
 
-        harmony.PatchAll(typeof(Patches.PointerScale));
+        harmony.PatchAll(typeof(Patches.PointerScaleMultiply));
 
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }
