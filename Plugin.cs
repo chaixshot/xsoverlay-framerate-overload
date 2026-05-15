@@ -30,6 +30,11 @@ public class Plugin : BaseUnityPlugin
         if (XConfig.AlwayHideCursor.Value)
             harmony.PatchAll(typeof(Patches.AlwayHideCursor));
 
+        if (XConfig.MouseNavigation.Value)
+            harmony.PatchAll(typeof(Patches.MouseNavigation));
+
+        if (XConfig.DoubleClickDelay.Value)
+            harmony.PatchAll(typeof(Patches.DoubleClickDelay));
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }
 

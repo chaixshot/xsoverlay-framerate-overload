@@ -15,8 +15,9 @@ namespace xsoverlay_tweak
         public static ConfigEntry<bool> AlwayUpdateCursor;
         public static ConfigEntry<bool> AlwayHideCursor;
         public static ConfigEntry<bool> ActivePointerColor;
+        public static ConfigEntry<bool> DoubleClickDelay;
 
-        public static ConfigEntry<bool> MouseNavigationEnable;
+        public static ConfigEntry<bool> MouseNavigation;
         public static ConfigEntry<bool> MouseNavigationUseModifiedKey;
 
         public static void AllConfig(ConfigFile cfg)
@@ -31,9 +32,10 @@ A value less than your VR Headset refresh rate means no effect");
 which means you are always seeing the previous cursor of the old frame
 Enable this to update the actual Desktop cursor before getting captured in the next frame");
             AlwayHideCursor = cfg.Bind("Cursor", "AlwayHideCursor", false, "Alwalys hide Window captured cursor");
-            ActivePointerColor = cfg.Bind("Cursor", "ActivePointerColor", true, "Determine the activeted hand Pointer by color");
+            ActivePointerColor = cfg.Bind("Cursor", "ActivePointerColor", true, "Determine the activated hand Pointer by color and opacity");
+            DoubleClickDelay = cfg.Bind("Cursor", "DoubleClickDelay", true, "Apply a double-click delay setting to the Pointer itself, not just the cursor");
 
-            MouseNavigationEnable = cfg.Bind("Mouse Navigation", "Enable", true, "Enable custom keybinding to simulate the side mouse Forward/Back button");
+            MouseNavigation = cfg.Bind("Mouse Navigation", "Enable", true, "Enable custom keybinding to simulate the side mouse Forward/Back button");
             MouseNavigationUseModifiedKey = cfg.Bind("Mouse Navigation", "UseModifiedKey", false, @"Using [Alt]+[Left] and [Alt]+[Right] instead of Mouse Input
 Due to Mouse Input has to hover the cursor over the target window to interact, but the modified key will interact with the current focused window instead");
         }
