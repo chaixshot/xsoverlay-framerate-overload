@@ -22,8 +22,6 @@ namespace xsoverlay_tweak.Patches
         {
             if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
 
-            RemoveUpdatedOverlay(__instance);
-
             var SyncedOverlayUpdate = AccessTools.Method(typeof(Raycaster), "SyncedOverlayUpdate");
             _handArray.Add(new HandData
             {
@@ -32,9 +30,9 @@ namespace xsoverlay_tweak.Patches
             });
         }
 
-        [HarmonyPatch("UnsubscribeFromEvents")]
+        [HarmonyPatch("SubscribeToEvents"), HarmonyPatch("UnsubscribeFromEvents")]
         [HarmonyPostfix]
-        public static void UnsubscribeFromEvents(Raycaster __instance)
+        public static void SubscribeToEvents(Raycaster __instance)
         {
             if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
 
