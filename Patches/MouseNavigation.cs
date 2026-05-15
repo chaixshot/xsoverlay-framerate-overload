@@ -24,7 +24,7 @@ namespace xsoverlay_tweak.Patches
         private static Raycaster CurrentRaycaster;
 
         // Get current active hand
-        [HarmonyPatch(typeof(DesktopCursorManager), "Awake")]
+        [HarmonyPatch(typeof(UpdateDateTime), "Awake")]
         [HarmonyPostfix]
         public static void InitializeEvents()
         {
