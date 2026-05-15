@@ -18,6 +18,16 @@ namespace xsoverlay_tweak.Patches
             else if (!__instance.HoveringOverlay.IsLocked)
                 ___VisualCursorElementOverlay.colorTint = XSettingsManager.Instance.Settings.AccentColor;
         }
+
+        [HarmonyPatch("DetermineCursorVisibility")]
+        [HarmonyPostfix]
+        public static void DetermineCursorVisibility(Raycaster __instance, ref Unity_Overlay ___VisualCursorElementOverlay)
+        {
+            if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
+
+            if (DesktopCursorManager.Instance.GetCurrentInputDevice() != __instance && __instance.HoveringOverlay.IsDesktopOrWindowCapture)
+                if (___VisualCursorElementOverlay.opacity.Equals(1))
+                    ___VisualCursorElementOverlay.opacity = 0.3f;
         }
     }
 }
