@@ -11,10 +11,13 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void UpdateHoveringOverlay(Raycaster __instance, ref Unity_Overlay ___VisualCursorElementOverlay)
         {
-            if (DesktopCursorManager.Instance.GetCurrentInputDevice() == __instance)
-                ___VisualCursorElementOverlay.colorTint = XSettingsManager.Instance.Settings.AccentColor;
-            else
+            if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
+
+            if (DesktopCursorManager.Instance.GetCurrentInputDevice() != __instance && __instance.HoveringOverlay.IsDesktopOrWindowCapture)
                 ___VisualCursorElementOverlay.colorTint = Color.red;
+            else if (!__instance.HoveringOverlay.IsLocked)
+                ___VisualCursorElementOverlay.colorTint = XSettingsManager.Instance.Settings.AccentColor;
+        }
         }
     }
 }
