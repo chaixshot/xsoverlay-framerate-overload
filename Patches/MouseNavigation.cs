@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Valve.Newtonsoft.Json;
 using Valve.Newtonsoft.Json.Linq;
@@ -22,6 +23,10 @@ namespace xsoverlay_tweak.Patches
 
         private static bool IsDesktopHover = false;
         private static Raycaster CurrentRaycaster;
+
+        // Define this once at the class level to avoid Marshal.SizeOf and repeated allocations
+        private static readonly uint DigitalDataSize = (uint)Marshal.SizeOf(typeof(InputDigitalActionData_t));
+        private static InputDigitalActionData_t _sharedData = new();
 
         // Get current active hand
         [HarmonyPatch(typeof(UpdateDateTime), "Awake")]
@@ -60,26 +65,35 @@ namespace xsoverlay_tweak.Patches
                     SimulateForwardNavigation(XInputManager.sim);
         }
 
-        /// <summary>
-        /// Generalized trigger check for any boolean SteamVR action
-        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool CheckActionTriggered(string path, ref ulong handle, ref bool lastState)
         {
+            // Fast Handle lookup
             if (handle == 0)
+            {
                 OpenVR.Input.GetActionHandle(path, ref handle);
+                if (handle == 0) return false;
+            }
 
-            InputDigitalActionData_t data = new();
-            uint size = (uint)Marshal.SizeOf(typeof(InputDigitalActionData_t));
+            // Use a shared static struct to avoid re-allocating 'new' on stack
+            // We pass it by reference to the OpenVR API
+            var error = OpenVR.Input.GetDigitalActionData(handle, ref _sharedData, DigitalDataSize, 0);
 
-            var error = OpenVR.Input.GetDigitalActionData(handle, ref data, size, 0);
+            // Compacted check: Error and Active state in one branch
+            if (error == EVRInputError.None && _sharedData.bActive)
+            {
+                bool isPressedNow = _sharedData.bState;
 
-            if (error != EVRInputError.None || !data.bActive) return false;
+                // State-change logic (Trigger on Leading Edge)
+                // This is the fastest way to detect a 'Click' (False -> True)
+                if (isPressedNow != lastState)
+                {
+                    lastState = isPressedNow;
+                    return isPressedNow;
+                }
+            }
 
-            bool isPressedNow = data.bState;
-            bool triggered = isPressedNow && !lastState;
-            lastState = isPressedNow;
-
-            return triggered;
+            return false;
         }
 
         private static void SimulateBackNavigation(InputSimulator sim)
