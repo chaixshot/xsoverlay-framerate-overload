@@ -7,7 +7,7 @@ namespace xsoverlay_tweak.Patches
     internal class AlwayHideCursor
     {
         // Static list to track all active window managers
-        private static readonly List<WindowComponentManager> _activeManagers = [];
+        private static readonly List<WindowComponentManager> instanceRefs = [];
 
         // Cache the private field once for high-speed access
         private static readonly FieldInfo WindowCursorField =
@@ -17,8 +17,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void Start(WindowComponentManager __instance)
         {
-            if (!_activeManagers.Contains(__instance))
-                _activeManagers.Add(__instance);
+            if (!instanceRefs.Contains(__instance))
+                instanceRefs.Add(__instance);
         }
 
         [HarmonyPatch(typeof(WindowComponentManager), "OnSwitchHoveringOverlay")]
@@ -26,14 +26,14 @@ namespace xsoverlay_tweak.Patches
         public static void OnSwitchHoveringOverlay()
         {
             // Loop backwards through all managers
-            for (int i = _activeManagers.Count - 1; i >= 0; i--)
+            for (int i = instanceRefs.Count - 1; i >= 0; i--)
             {
-                WindowComponentManager manager = _activeManagers[i];
+                WindowComponentManager manager = instanceRefs[i];
 
                 // If window was destroyed, remove from list and skip
                 if (manager == null)
                 {
-                    _activeManagers.RemoveAt(i);
+                    instanceRefs.RemoveAt(i);
                     continue;
                 }
 
@@ -47,7 +47,7 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void OnDestroy(WindowComponentManager __instance)
         {
-            _activeManagers.Remove(__instance);
+            instanceRefs.Remove(__instance);
         }
     }
 }
