@@ -2,12 +2,6 @@
 
 namespace xsoverlay_tweak
 {
-    internal class Utils
-    {
-
-
-    }
-
     internal class XConfig
     {
         public static ConfigEntry<int> RefreshRate;
