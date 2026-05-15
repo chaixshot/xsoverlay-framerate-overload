@@ -27,7 +27,7 @@ namespace xsoverlay_tweak.Patches
 
             if (DesktopCursorManager.Instance.GetCurrentInputDevice() != __instance && __instance.HoveringOverlay.IsDesktopOrWindowCapture)
                 if (___VisualCursorElementOverlay.opacity.Equals(1))
-                    ___VisualCursorElementOverlay.opacity = 0.3f;
+                    ___VisualCursorElementOverlay.opacity = XConfig.ActivePointerOpacity.Value;
         }
     }
 }

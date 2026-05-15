@@ -14,30 +14,42 @@ namespace xsoverlay_tweak
 
         public static ConfigEntry<bool> AlwayUpdateCursor;
         public static ConfigEntry<bool> AlwayHideCursor;
+
         public static ConfigEntry<bool> ActivePointerColor;
-        public static ConfigEntry<bool> DoubleClickDelay;
+        public static ConfigEntry<float> ActivePointerOpacity;
+        public static ConfigEntry<int> PointerScale;
+        public static ConfigEntry<bool> PointerDoubleClickDelay;
 
         public static ConfigEntry<bool> MouseNavigation;
         public static ConfigEntry<bool> MouseNavigationUseModifiedKey;
 
         public static void AllConfig(ConfigFile cfg)
         {
+            //?? General
             RefreshRate = cfg.Bind("General", "RefreshRate", 0, @"Change the XSOverlay render frame rate.
-The higher value means more responsive and more CPU usage
-Set to -1 means unlimited
-Set to 0 means do the same as your VR Headset refresh rate as default XSOverlay does
-A value less than your VR Headset refresh rate means no effect");
+The higher value means more responsive and more CPU usage.
+Set to -1 means unlimited.
+Set to 0 means do the same as your VR Headset refresh rate as default XSOverlay does.
+A value less than your VR Headset refresh rate means no effect.");
 
-            AlwayUpdateCursor = cfg.Bind("Cursor", "AlwayUpdateCursor", true, @"By default, XSOverlay displays the capture Desktop before sending new cursor position data to the actual cursor,
-which means you are always seeing the previous cursor of the old frame
-Enable this to update the actual Desktop cursor before getting captured in the next frame");
-            AlwayHideCursor = cfg.Bind("Cursor", "AlwayHideCursor", false, "Alwalys hide Window captured cursor");
-            ActivePointerColor = cfg.Bind("Cursor", "ActivePointerColor", true, "Determine the activated hand Pointer by color and opacity");
-            DoubleClickDelay = cfg.Bind("Cursor", "DoubleClickDelay", true, "Apply a double-click delay setting to the Pointer itself, not just the cursor");
+            //?? Cursor
+            AlwayUpdateCursor = cfg.Bind("Cursor", "AlwayUpdateCursor", true, @"By default, XSOverlay displays the captured Desktop before sending new cursor position data to the actual cursor
+, which means you are always seeing the previous cursor of the old frame.
+Enable this to update the actual Desktop cursor before getting capture in the next frame.");
+            AlwayHideCursor = cfg.Bind("Cursor", "AlwayHideCursor", false, "Always hide Window Capture cursor.");
 
-            MouseNavigation = cfg.Bind("Mouse Navigation", "Enable", true, "Enable custom keybinding to simulate the side mouse Forward/Back button");
-            MouseNavigationUseModifiedKey = cfg.Bind("Mouse Navigation", "UseModifiedKey", false, @"Using [Alt]+[Left] and [Alt]+[Right] instead of Mouse Input
-Due to Mouse Input has to hover the cursor over the target window to interact, but the modified key will interact with the current focused window instead");
+            //?? Pointer
+            ActivePointerColor = cfg.Bind("Pointer", "ActivePointerColor", true, "Determine the activated hand Pointer by red color.");
+            ActivePointerOpacity = cfg.Bind("Pointer", "ActivePointerOpacity", 0.5f, "Determine the deactivated hand Pointer by opacity.");
+            PointerScale = cfg.Bind("Pointer", "PointerScale", 0, @"Change the Pointer scale over then 100% in common setting.
+A value less then 100 means no effect.");
+            PointerDoubleClickDelay = cfg.Bind("Pointer", "PointerDoubleClickDelay", true, "Apply a Double Click Delay setting to the Pointer itself, not just the cursor.");
+
+            //?? Mouse Navigation
+            MouseNavigation = cfg.Bind("Mouse Navigation", "Enable", false, @"Enable custom keybinding to simulate the side mouse Forward/Back button.
+Change the button by clicking the Binding tab in the XSOverlay settings. Then edit the Current Binding, assign button action for Mouse Back/Forward");
+            MouseNavigationUseModifiedKey = cfg.Bind("Mouse Navigation", "UseModifiedKey", false, @"Using Alt+Left and Alt+Right instead of Mouse Input.
+Due to Mouse Input has to hover the cursor over the target window to interact, but the modified key will interact with the current focused window instead.");
         }
     }
 }
