@@ -13,6 +13,7 @@ namespace xsoverlay_tweak
         public static ConfigEntry<float> ActivePointerOpacity;
         public static ConfigEntry<int> PointerScale;
         public static ConfigEntry<bool> PointerDoubleClickDelay;
+        public static ConfigEntry<bool> PhysicalMouseDetector;
 
         public static ConfigEntry<bool> MouseNavigation;
         public static ConfigEntry<bool> MouseNavigationUseModifiedKey;
@@ -31,6 +32,7 @@ A value less than your VR Headset refresh rate means no effect.");
 , which means you are always seeing the previous cursor of the old frame.
 Enable this to update the actual Desktop cursor before getting capture in the next frame.");
             AlwayHideCursor = cfg.Bind("Cursor", "AlwayHideCursor", false, "Always hide Window Capture cursor.");
+            PhysicalMouseDetector = cfg.Bind("Cursor", "PhysicalMouseDetector", true, "When a physical mouse is moving the desktop cursor, Pointer will no longer control the cursor until clicking.");
 
             //?? Pointer
             ActivePointerColor = cfg.Bind("Pointer", "ActivePointerColor", true, "Determine the activated hand Pointer by red color.");

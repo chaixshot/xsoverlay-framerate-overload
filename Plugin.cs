@@ -36,6 +36,9 @@ public class Plugin : BaseUnityPlugin
         if (XConfig.PointerDoubleClickDelay.Value)
             harmony.PatchAll(typeof(Patches.PointerDoubleClickDelay));
 
+        if (XConfig.PhysicalMouseDetector.Value)
+            harmony.PatchAll(typeof(Patches.PhysicalMouseDetector));
+
         harmony.PatchAll(typeof(Patches.PointerScale));
 
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
