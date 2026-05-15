@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using XSOverlay;
 
 namespace xsoverlay_tweak.Patches
@@ -12,7 +13,7 @@ namespace xsoverlay_tweak.Patches
         {
             XSOEventSystem.OnSetPointerScale += scale =>
             {
-                XSettingsManager.Instance.Settings.PointerScale *= XConfig.PointerScaleMultiply.Value;
+                XSettingsManager.Instance.Settings.PointerScale = scale * XConfig.PointerScaleMultiply.Value;
             };
         }
 
@@ -20,7 +21,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void Start()
         {
-            XSettingsManager.Instance.Settings.PointerScale *= XConfig.PointerScaleMultiply.Value;
+            XSSettings settings = XSettingsManager.Instance.Settings;
+            settings.PointerScale = Math.Min(settings.PointerScale, 1f) * XConfig.PointerScaleMultiply.Value;
         }
     }
 }
