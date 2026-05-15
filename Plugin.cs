@@ -33,8 +33,8 @@ public class Plugin : BaseUnityPlugin
         if (XConfig.MouseNavigation.Value)
             harmony.PatchAll(typeof(Patches.MouseNavigation));
 
-        if (XConfig.DoubleClickDelay.Value)
-            harmony.PatchAll(typeof(Patches.DoubleClickDelay));
+        if (XConfig.PointerDoubleClickDelay.Value)
+            harmony.PatchAll(typeof(Patches.PointerDoubleClickDelay));
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }
 

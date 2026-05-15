@@ -6,7 +6,7 @@ using XSOverlay;
 namespace xsoverlay_tweak.Patches
 {
     [HarmonyPatch(typeof(Raycaster))]
-    internal class DoubleClickDelay
+    internal class PointerDoubleClickDelay
     {
         // Data container unique to each Raycaster CurrentRaycaster
         private class RaycasterState
@@ -20,8 +20,7 @@ namespace xsoverlay_tweak.Patches
         private static readonly ConditionalWeakTable<Raycaster, RaycasterState> instanceRefs = new();
 
         // Fast field access for private Raycaster variables
-        private static readonly AccessTools.FieldRef<Raycaster, Vector3> DirRef =
-            AccessTools.FieldRefAccess<Raycaster, Vector3>("CurrentRayDirection");
+        private static readonly AccessTools.FieldRef<Raycaster, Vector3> DirRef = AccessTools.FieldRefAccess<Raycaster, Vector3>("CurrentRayDirection");
 
         [HarmonyPatch("HandleClicksForDesktopWindows"), HarmonyPatch("HandleTouchInputForDesktopWindows")]
         [HarmonyPrefix]
