@@ -1,15 +1,17 @@
 ﻿using HarmonyLib;
+using XSOverlay;
 
 namespace xsoverlay_tweak.Patches
 {
     [HarmonyPatch(typeof(UI_RelativeTransformManipulator))]
     internal class PointerScale
     {
-        [HarmonyPatch("OnSetPointerScale")]
+        [HarmonyPatch("Start")]
         [HarmonyPostfix]
-        public static void UpdateHoveringOverlay(UI_RelativeTransformManipulator __instance, ref float ___scaleMultiplier)
+        public static void Start()
         {
-            ___scaleMultiplier = 2f;
+            if (XConfig.PointerScale.Value > 100)
+                XSettingsManager.Instance.Settings.PointerScale = XConfig.PointerScale.Value / 100;
         }
     }
 }
