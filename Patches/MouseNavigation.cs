@@ -1,7 +1,13 @@
 ﻿using HarmonyLib;
+using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using Valve.Newtonsoft.Json;
+using Valve.Newtonsoft.Json.Linq;
 using Valve.VR;
 using WindowsInput;
+using WindowsInput.Native;
 using XSOverlay;
 
 namespace xsoverlay_tweak.Patches
@@ -22,6 +28,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void InitializeEvents()
         {
+            ApplySteamVRActionBinding();
+
             XSOEventSystem.OnTakeControlOfDesktopCursor += raycaster =>
             {
                 CurrentRaycaster = raycaster;
@@ -74,16 +82,74 @@ namespace xsoverlay_tweak.Patches
             return triggered;
         }
 
-        public static void SimulateBackNavigation(InputSimulator sim)
+        private static void SimulateBackNavigation(InputSimulator sim)
         {
-            //sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.LEFT);
-            sim.Mouse.XButtonClick(1);
+            if (XConfig.MouseNavigationUseModifiedKey.Value)
+                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.LEFT);
+            else
+                sim.Mouse.XButtonClick(1);
         }
 
-        public static void SimulateForwardNavigation(InputSimulator sim)
+        private static void SimulateForwardNavigation(InputSimulator sim)
         {
-            //sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.RIGHT);
-            sim.Mouse.XButtonClick(2);
+            if (XConfig.MouseNavigationUseModifiedKey.Value)
+                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.RIGHT);
+            else
+                sim.Mouse.XButtonClick(2);
+        }
+
+        private static void ApplySteamVRActionBinding()
+        {
+            string filePath = @".\XSOverlay_Data\StreamingAssets\SteamVR\actions.json";
+
+            string json = File.ReadAllText(filePath);
+            JObject root = JObject.Parse(json);
+            bool modified = false;
+
+            // Update "actions" array
+            JArray actions = (JArray)root["actions"];
+            string[] actionNames = ["/actions/xsoverlay/in/MouseBack", "/actions/xsoverlay/in/MouseForward"];
+
+            foreach (string name in actionNames)
+            {
+                if (!actions.Any(a => a["name"]?.ToString() == name))
+                {
+                    actions.Add(new JObject
+                    {
+                        ["name"] = name,
+                        ["type"] = "boolean",
+                        ["requirement"] = "optional"
+                    });
+                    modified = true;
+                }
+            }
+
+            // Update "localization" object
+            // Localization is an array of objects; we want the first one (usually en_US)
+            JArray localization = (JArray)root["localization"];
+            if (localization != null && localization.HasValues)
+            {
+                JObject langObject = (JObject)localization[0];
+
+                if (langObject["/actions/xsoverlay/in/MouseBack"] == null)
+                {
+                    langObject["/actions/xsoverlay/in/MouseBack"] = "Mouse Back";
+                    modified = true;
+                }
+
+                if (langObject["/actions/xsoverlay/in/MouseForward"] == null)
+                {
+                    langObject["/actions/xsoverlay/in/MouseForward"] = "Mouse Forward";
+                    modified = true;
+                }
+            }
+
+            // Save if changes were made
+            if (modified)
+            {
+                File.WriteAllText(filePath, root.ToString(Formatting.Indented));
+                Console.WriteLine("Manifest updated with actions and localization.");
+            }
         }
     }
 }
