@@ -1,96 +1,119 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace xsoverlay_tweak.Utils
 {
-    public static class MouseInputDetector
+    public unsafe class MouseInputDetector : NativeWindow, IDisposable
     {
-        private static long _lastPhysicalMoveTime;
-        private const long StopThresholdMs = 100; // Time in ms to consider the mouse "stopped"
+        // Event to notify your main application
+        public event Action<int, int> PhysicalMouseMoved;
 
-        // Public property: True if physical movement happened within the last 100ms
-        public static bool IsPhysicalMovement
+        private const int WM_INPUT = 0x00FF;
+        private const int RID_INPUT = 0x10000003;
+        private const uint RIDEV_INPUTSINK = 0x00000100;
+
+        // Cache sizes and buffers to avoid allocations in the loop
+        private readonly uint _headerSize = (uint)Marshal.SizeOf(typeof(RAWINPUTHEADER));
+        private byte[] _inputBuffer = new byte[128];
+
+        public MouseInputDetector()
         {
-            get
+            CreateHandle(new CreateParams());
+            RegisterDevice(this.Handle);
+        }
+
+        private void RegisterDevice(IntPtr targetHandle)
+        {
+            RAWINPUTDEVICE[] rid = new RAWINPUTDEVICE[1];
+            rid[0].usUsagePage = 0x01;
+            rid[0].usUsage = 0x02;
+            rid[0].dwFlags = RIDEV_INPUTSINK;
+            rid[0].hwndTarget = targetHandle;
+
+            if (!RegisterRawInputDevices(rid, (uint)rid.Length, (uint)Marshal.SizeOf(rid[0])))
             {
-                long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                return (currentTime - _lastPhysicalMoveTime) < StopThresholdMs;
+                throw new Exception("Failed to register Raw Input device.");
             }
         }
 
-        private const int WH_MOUSE_LL = 14;
-        private const int WM_MOUSEMOVE = 0x0200;
-        private const int LLMHF_INJECTED = 0x01;
-
-        private static LowLevelMouseProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
-
-        public static void Start()
+        protected override void WndProc(ref Message m)
         {
-            if (_hookID == IntPtr.Zero)
-                _hookID = SetHook(_proc);
-        }
-
-        public static void Stop()
-        {
-            if (_hookID != IntPtr.Zero)
+            if (m.Msg == WM_INPUT)
             {
-                UnhookWindowsHookEx(_hookID);
-                _hookID = IntPtr.Zero;
-            }
-        }
+                uint dwSize = (uint)_inputBuffer.Length;
 
-        private static IntPtr SetHook(LowLevelMouseProc proc)
-        {
-            using Process curProcess = Process.GetCurrentProcess();
-            using ProcessModule curModule = curProcess.MainModule;
-            return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
-        }
-
-        private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0 && wParam == (IntPtr)WM_MOUSEMOVE)
-            {
-                MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
-
-                // Check if the movement is from hardware (not injected)
-                bool isHardware = (hookStruct.flags & LLMHF_INJECTED) == 0;
-
-                if (isHardware)
+                // 'fixed' prevents the GC from moving our buffer while we read it
+                fixed (byte* pBuffer = _inputBuffer)
                 {
-                    // Update the timestamp to 'now'
-                    _lastPhysicalMoveTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                    int result = GetRawInputData(
+                        m.LParam,
+                        RID_INPUT,
+                        (IntPtr)pBuffer,
+                        ref dwSize,
+                        _headerSize);
+
+                    if (result >= 0)
+                    {
+                        // Direct pointer casting (Zero overhead)
+                        RAWINPUTHEADER* header = (RAWINPUTHEADER*)pBuffer;
+
+                        // hDevice != 0 means it's a physical HID device (not simulated)
+                        if (header->hDevice != IntPtr.Zero)
+                        {
+                            // Move pointer forward past the header to the mouse data
+                            RAWMOUSE* mouse = (RAWMOUSE*)(pBuffer + _headerSize);
+
+                            // Trigger event with relative movement deltas
+                            PhysicalMouseMoved?.Invoke(mouse->lLastX, mouse->lLastY);
+                        }
+                    }
                 }
             }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            base.WndProc(ref m);
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct MSLLHOOKSTRUCT
+        public void Dispose()
         {
-            public POINT pt;
-            public uint mouseData;
-            public uint flags;
-            public uint time;
-            public IntPtr dwExtraInfo;
+            DestroyHandle();
+            _inputBuffer = null;
+        }
+
+        #region Ultra-Fast Win32 Structs (Sequential)
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RAWINPUTDEVICE
+        {
+            public ushort usUsagePage;
+            public ushort usUsage;
+            public uint dwFlags;
+            public IntPtr hwndTarget;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct POINT { public int x; public int y; }
+        private struct RAWINPUTHEADER
+        {
+            public uint dwType;
+            public uint dwSize;
+            public IntPtr hDevice;
+            public IntPtr wParam;
+        }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RAWMOUSE
+        {
+            public ushort usFlags;
+            public uint ulButtons;
+            public uint ulRawButtons;
+            public int lLastX;
+            public int lLastY;
+            public uint ulExtraInformation;
+        }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        [DllImport("user32.dll")]
+        private static extern bool RegisterRawInputDevices(RAWINPUTDEVICE[] pRawInputDevices, uint uiNumDevices, uint cbSize);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
+        [DllImport("user32.dll")]
+        private static extern int GetRawInputData(IntPtr hRawInput, uint uiCommand, IntPtr pData, ref uint pcbSize, uint cbSizeHeader);
+        #endregion
     }
 }

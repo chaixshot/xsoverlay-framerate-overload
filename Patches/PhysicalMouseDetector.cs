@@ -6,34 +6,43 @@ namespace xsoverlay_tweak.Patches
     internal class PhysicalMouseDetector
     {
         private static bool IsPhysicalMovement = false;
+        private static MouseInputDetector mouseDetector;
 
         [HarmonyPatch(typeof(UpdateDateTime), "Start")]
         [HarmonyPostfix]
         public static void Start()
         {
-            MouseInputDetector.Start();
-        }
-
-        [HarmonyPatch(typeof(UpdateDateTime), "Update")]
-        [HarmonyPostfix]
-        public static void Update()
-        {
-            if (MouseInputDetector.IsPhysicalMovement)
+            mouseDetector = new MouseInputDetector();
+            mouseDetector.PhysicalMouseMoved += (x, y) =>
+            {
                 IsPhysicalMovement = true;
+            };
         }
 
         [HarmonyPatch(typeof(Raycaster)), HarmonyPatch("HandleClicksForDesktopWindows")]
-        [HarmonyPostfix]
-        public static void HandleClicksForDesktopWindows()
+        [HarmonyPrefix]
+        public static bool HandleClicksForDesktopWindows()
         {
-            IsPhysicalMovement = false;
+            if (IsPhysicalMovement)
+            {
+                IsPhysicalMovement = false;
+                return false;
+            }
+
+            return true;
         }
 
         [HarmonyPatch(typeof(Raycaster)), HarmonyPatch("HandleTouchInputForDesktopWindows")]
-        [HarmonyPostfix]
-        public static void HandleTouchInputForDesktopWindows()
+        [HarmonyPrefix]
+        public static bool HandleTouchInputForDesktopWindows()
         {
-            IsPhysicalMovement = false;
+            if (IsPhysicalMovement)
+            {
+                IsPhysicalMovement = false;
+                return false;
+            }
+
+            return true;
         }
 
         [HarmonyPatch(typeof(Raycaster), "SyncedOverlayUpdate")]
