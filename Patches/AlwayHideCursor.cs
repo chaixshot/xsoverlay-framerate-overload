@@ -10,8 +10,7 @@ namespace xsoverlay_tweak.Patches
         private static readonly List<WindowComponentManager> instanceRefs = [];
 
         // Cache the private field once for high-speed access
-        private static readonly FieldInfo WindowCursorField =
-            AccessTools.Field(typeof(WindowComponentManager), "WindowCanShowDesktopCursor");
+        private static readonly FieldInfo WindowCursorField = AccessTools.Field(typeof(WindowComponentManager), "WindowCanShowDesktopCursor");
 
         [HarmonyPatch(typeof(WindowComponentManager), "Start")]
         [HarmonyPostfix]
