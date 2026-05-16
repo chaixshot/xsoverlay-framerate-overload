@@ -1,28 +1,15 @@
 ﻿using HarmonyLib;
-using System;
-using XSOverlay;
 
 namespace xsoverlay_tweak.Patches
 {
-    [HarmonyPatch(typeof(UpdateDateTime))]
+    [HarmonyPatch(typeof(UI_RelativeTransformManipulator))]
     internal class PointerScaleMultiply
     {
-        [HarmonyPatch("Awake")]
+        [HarmonyPatch("OnSetPointerScale")]
         [HarmonyPostfix]
-        public static void Awake()
+        public static void OnSetPointerScale(ref float ___scaleMultiplier)
         {
-            XSOEventSystem.OnSetPointerScale += scale =>
-            {
-                XSettingsManager.Instance.Settings.PointerScale = scale * XConfig.PointerScaleMultiply.Value;
-            };
-        }
-
-        [HarmonyPatch("Start")]
-        [HarmonyPostfix]
-        public static void Start()
-        {
-            XSSettings settings = XSettingsManager.Instance.Settings;
-            settings.PointerScale = Math.Min(settings.PointerScale, 1f) * XConfig.PointerScaleMultiply.Value;
+            ___scaleMultiplier *= XConfig.PointerScaleMultiply.Value;
         }
     }
 }
