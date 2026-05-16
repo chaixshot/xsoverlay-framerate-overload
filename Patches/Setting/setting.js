@@ -1,12 +1,13 @@
 if (window.__XSO_TWEAK_INIT__) return;
 window.__XSO_TWEAK_INIT__ = true;
 
-var _init;
-Object.defineProperty(window, 'Initialize', {
-    get: function () { return _init; },
-    set: function (orig) {
-        _init = function (name) {
-            orig(name);
+const wrap = (orig) => {
+    if (typeof orig !== 'function') return orig;
+    return function (name) {
+        try {
+            orig.apply(this, arguments);
+        } catch (e) { console.error('[Tweak] Original Initialize failed:', e); }
+
             var scr = document.createElement('script');
             scr.type = 'module';
             scr.textContent = "import * as Ui from './_Shared/js/uiComponents.js'; (" + function (Ui) {
@@ -25,20 +26,24 @@ Object.defineProperty(window, 'Initialize', {
                 // --- Sidebar Navigation Button ---
                 const existingBtns = Array.from(sidebar.querySelectorAll('.side-bar-button'));
 
-                Ui.Divider(sidebar, 'sidebar-divider');
                 const navBtn = Ui.CreateElement(sidebar, 'button', ['side-bar-button']);
-                const navDivider = navBtn.previousElementSibling;
-
-                // Reorder the button if a valid target index is provided
-                if (CONFIG.targetIndex !== null && CONFIG.targetIndex < existingBtns.length) {
-                    const referenceBtn = existingBtns[CONFIG.targetIndex];
-                    sidebar.insertBefore(navBtn, referenceBtn);
-                    sidebar.insertBefore(navDivider, navBtn);
-                }
-
                 Ui.CreateElement(navBtn, 'i', ['side-bar-button-icon', 'theme-font-contrast', 'bi', CONFIG.pageIcon]);
                 const navLabel = Ui.CreateElement(navBtn, 'div', ['side-bar-button-text']);
                 navLabel.innerHTML = CONFIG.pageName;
+
+                // Determine insertion point for the button
+                let referenceNodeForButton = null;
+                if (CONFIG.targetIndex !== null && CONFIG.targetIndex < existingBtns.length) {
+                    referenceNodeForButton = existingBtns[CONFIG.targetIndex];
+                    sidebar.insertBefore(navBtn, referenceNodeForButton);
+                }
+
+                // Conditionally add a divider after the new button, mimicking existing sidebar behavior.
+                // A divider is added after a button if there are other buttons following it.
+                if (CONFIG.targetIndex !== null && CONFIG.targetIndex < existingBtns.length) {
+                    const newDivider = Ui.CreateElement(sidebar, 'div', ['sidebar-divider']);
+                    sidebar.insertBefore(newDivider, navBtn.nextSibling);
+                }
 
                 // --- Settings Page Layout ---
                 const pageRoot = Ui.CreateElement(wrapper, 'div', ['page-container', 'theme-dark']);
@@ -72,7 +77,7 @@ Object.defineProperty(window, 'Initialize', {
                 // Cursor Section
                 const Cursor = new Ui.Section('Cursor', 3, pageRoot);
                 addSetting(Cursor, Ui.ComponentType.Toggle, 'AlwayUpdateCursor', 'AlwayUpdateCursor', 'By default, XSOverlay displays the captured Desktop before sending new cursor position data to the actual cursor', true);
-                addSetting(Cursor, Ui.ComponentType.Toggle, 'AlwayHideCursor', 'AlwayHideCursor', 'Always hide Window Capture cursor.', false);
+                addSetting(Cursor, Ui.ComponentType.Toggle, 'AlwaysHideCursor', 'AlwaysHideCursor', 'Always hide Window Capture cursor.', false);
                 addSetting(Cursor, Ui.ComponentType.Toggle, 'PhysicalMouseDetector', 'PhysicalMouseDetector', 'When a physical mouse is moving the desktop cursor, Pointer will no longer control the cursor until clicking.', true);
 
                 // General Section
@@ -86,7 +91,7 @@ Object.defineProperty(window, 'Initialize', {
                 
                 // Pointer Section
                 const Pointer = new Ui.Section('Pointer', 4, pageRoot);
-                addSetting(Pointer, Ui.ComponentType.Toggle, 'ActivePointerColor', 'ActivePointerColor', 'Determine the activated hand Pointer by red color.', true);
+                addSetting(Pointer, Ui.ComponentType.Toggle, 'ActivesPointerColor', 'ActivesPointerColor', 'Determine the activated hand Pointer by red color.', true);
                 addSetting(Pointer, Ui.ComponentType.Slider, 'ActivePointerOpacity', 'ActivePointerOpacity', 'Determine the deactivated hand Pointer by opacity.', 0.5, [0.0, 1.0, 0.1], '');
                 addSetting(Pointer, Ui.ComponentType.Slider, 'PointerScaleMultiply', 'PointerScaleMultiply', 'Multiply the Pointer scale from the common setting.', 1.0, [1.0, 10.0, 0.1], '');
                 addSetting(Pointer, Ui.ComponentType.Toggle, 'PointerDoubleClickDelay', 'PointerDoubleClickDelay', 'Apply a Double Click Delay setting to the Pointer itself, not just the cursor.', true);
@@ -134,7 +139,13 @@ Object.defineProperty(window, 'Initialize', {
                 });
             }.toString() + ") (Ui);";
             document.body.appendChild(scr);
-        };
-    },
-    configurable: true
+    };
+};
+
+let _init = wrap(window.Initialize);
+Object.defineProperty(window, 'Initialize', {
+    get: () => _init,
+    set: (val) => { _init = wrap(val); },
+    configurable: true,
+    enumerable: true
 });
