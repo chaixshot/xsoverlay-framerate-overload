@@ -24,6 +24,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void OnSwitchHoveringOverlay()
         {
+            if (!IsEnable()) return;
+
             // Loop backwards through all managers
             for (int i = instanceRefs.Count - 1; i >= 0; i--)
             {
@@ -41,12 +43,9 @@ namespace xsoverlay_tweak.Patches
             }
         }
 
-        // Clean up list when windows are destroyed to save memory
-        [HarmonyPatch(typeof(WindowComponentManager), "OnDestroy")]
-        [HarmonyPostfix]
-        public static void OnDestroy(WindowComponentManager __instance)
+        private static bool IsEnable()
         {
-            instanceRefs.Remove(__instance);
+            return XConfig.AlwayHideCursor.Value;
         }
     }
 }

@@ -18,27 +18,13 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
         XConfig.AllConfig(Config);
 
-        if (XConfig.AlwayUpdateCursor.Value)
-            harmony.PatchAll(typeof(Patches.AlwayUpdateCursor));
-
-        if (!XConfig.RefreshRate.Value.Equals(0))
-            harmony.PatchAll(typeof(Patches.RefreshRate));
-
-        if (XConfig.ActivePointerColor.Value)
-            harmony.PatchAll(typeof(Patches.ActivePointerColor));
-
-        if (XConfig.AlwayHideCursor.Value)
-            harmony.PatchAll(typeof(Patches.AlwayHideCursor));
-
-        if (XConfig.MouseNavigation.Value)
-            harmony.PatchAll(typeof(Patches.MouseNavigation));
-
-        if (XConfig.PointerDoubleClickDelay.Value)
-            harmony.PatchAll(typeof(Patches.PointerDoubleClickDelay));
-
-        if (XConfig.PhysicalMouseDetector.Value)
-            harmony.PatchAll(typeof(Patches.PhysicalMouseDetector));
-
+        harmony.PatchAll(typeof(Patches.AlwayUpdateCursor));
+        harmony.PatchAll(typeof(Patches.RefreshRate));
+        harmony.PatchAll(typeof(Patches.ActivePointerColor));
+        harmony.PatchAll(typeof(Patches.AlwayHideCursor));
+        harmony.PatchAll(typeof(Patches.MouseNavigation));
+        harmony.PatchAll(typeof(Patches.PointerDoubleClickDelay));
+        harmony.PatchAll(typeof(Patches.PhysicalMouseDetector));
         harmony.PatchAll(typeof(Patches.PointerScaleMultiply));
         harmony.PatchAll(typeof(Patches.SettingPage));
 

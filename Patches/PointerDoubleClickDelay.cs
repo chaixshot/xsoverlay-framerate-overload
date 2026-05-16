@@ -26,6 +26,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPrefix]
         public static void StartBlock(Raycaster __instance)
         {
+            if (!IsEnable()) return;
+
             // Only lock if this CurrentRaycaster is the one currently providing input
             if (DesktopCursorManager.Instance.GetCurrentInputDevice() == __instance)
             {
@@ -43,6 +45,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPrefix]
         public static bool BlockPointerAndCursor(Raycaster __instance)
         {
+            if (!IsEnable()) return true;
+
             // If we have a state for this hand, check if the timer is still running
             if (instanceRefs.TryGetValue(__instance, out var state))
             {
@@ -51,6 +55,11 @@ namespace xsoverlay_tweak.Patches
             }
 
             return true;
+        }
+
+        private static bool IsEnable()
+        {
+            return XConfig.PointerDoubleClickDelay.Value;
         }
     }
 }

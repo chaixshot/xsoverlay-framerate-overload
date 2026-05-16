@@ -8,14 +8,15 @@ namespace xsoverlay_tweak.Patches
         private static bool IsPhysicalMovement = false;
         private static MouseInputDetector mouseDetector;
 
-        [HarmonyPatch(typeof(UpdateDateTime), "Start")]
+        [HarmonyPatch(typeof(UpdateDateTime), "Awake")]
         [HarmonyPostfix]
-        public static void Start()
+        public static void InitializeEvents()
         {
             mouseDetector = new MouseInputDetector();
             mouseDetector.PhysicalMouseMoved += (x, y) =>
             {
-                IsPhysicalMovement = true;
+                if (IsEnable())
+                    IsPhysicalMovement = true;
             };
         }
 
@@ -50,6 +51,11 @@ namespace xsoverlay_tweak.Patches
         public static bool SyncedOverlayUpdate()
         {
             return !IsPhysicalMovement;
+        }
+
+        private static bool IsEnable()
+        {
+            return XConfig.PhysicalMouseDetector.Value;
         }
     }
 }

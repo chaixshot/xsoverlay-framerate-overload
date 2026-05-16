@@ -43,6 +43,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void Update()
         {
+            if (!IsEnable()) return;
+
             for (int i = _handArray.Count - 1; i >= 0; i--)
             {
                 var data = _handArray[i];
@@ -65,6 +67,11 @@ namespace xsoverlay_tweak.Patches
             var SyncedOverlayUpdate = AccessTools.Method(typeof(Raycaster), "SyncedOverlayUpdate");
             var handler = (Action<Unity_Overlay>)Delegate.CreateDelegate(typeof(Action<Unity_Overlay>), __instance, SyncedOverlayUpdate);
             XSOEventSystem.OnUpdatedOverlay -= handler;
+        }
+
+        private static bool IsEnable()
+        {
+            return XConfig.AlwayUpdateCursor.Value;
         }
     }
 }

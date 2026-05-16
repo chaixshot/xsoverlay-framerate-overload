@@ -25,6 +25,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPrefix]
         public static bool GetHMDRefreshRate(DeviceManager __instance)
         {
+            if (!IsEnable()) return true;
+
             XSTools.ExecuteOnMainThread(delegate
             {
                 Application.targetFrameRate = XConfig.RefreshRate.Value;
@@ -39,6 +41,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void Grab(ref float ___GrabbedDistance)
         {
+            if (!IsEnable()) return;
+
             float currentTime = Time.unscaledTime;
             if (currentTime - LastGrabTime < FrameInterval)
                 ___GrabbedDistance = GrabbedDistance;
@@ -54,6 +58,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPrefix]
         public static bool HandleScrolling(Raycaster __instance, ref MouseInputDevice ___InputDevice, ref int ___ScrollClicksPerSecond, ref float ____tickAccumulator, ref Vector2 ___CursorUVNormalized)
         {
+            if (!IsEnable()) return true;
+
             float currentTime = Time.unscaledTime;
             if (currentTime - LastScrollingTime < FrameInterval)
             {
@@ -97,8 +103,12 @@ namespace xsoverlay_tweak.Patches
             else
                 LastScrollingTime = currentTime;
 
-
             return false;
+        }
+
+        private static bool IsEnable()
+        {
+            return !XConfig.RefreshRate.Value.Equals(0);
         }
 
         //!! Test game fps

@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using Vuplex.WebView;
 using XSOverlay;
 using XSOverlay.WebApp;
 using XSOverlay.Websockets.API;
@@ -109,10 +110,13 @@ namespace xsoverlay_tweak.Patches
             // Lisen for WebView loaded
             wv._webView.WebView.LoadProgressChanged += (sender, args) =>
             {
-                wv._webView.WebView.ExecuteJavaScript(jsCode, (result) =>
+                if (args.Type == ProgressChangeType.Started)
                 {
-                    //Plugin.Logger.LogError($"[{wv.UserInterfaceSelection}] {result}");
-                });
+                    wv._webView.WebView.ExecuteJavaScript(jsCode, (result) =>
+                    {
+                        //Plugin.Logger.LogError($"[{wv.UserInterfaceSelection}] {result}");
+                    });
+                }
             };
 
         }

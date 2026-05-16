@@ -11,6 +11,7 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void UpdateHoveringOverlay(Raycaster __instance, ref Unity_Overlay ___VisualCursorElementOverlay)
         {
+            if (!IsEnable()) return;
             if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
 
             if (DesktopCursorManager.Instance.GetCurrentInputDevice() != __instance && __instance.HoveringOverlay.IsDesktopOrWindowCapture)
@@ -23,11 +24,17 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void DetermineCursorVisibility(Raycaster __instance, ref Unity_Overlay ___VisualCursorElementOverlay)
         {
+            if (!IsEnable()) return;
             if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
 
             if (DesktopCursorManager.Instance.GetCurrentInputDevice() != __instance && __instance.HoveringOverlay.IsDesktopOrWindowCapture)
                 if (___VisualCursorElementOverlay.opacity.Equals(1))
                     ___VisualCursorElementOverlay.opacity = XConfig.ActivePointerOpacity.Value;
+        }
+
+        private static bool IsEnable()
+        {
+            return XConfig.ActivePointerColor.Value;
         }
     }
 }

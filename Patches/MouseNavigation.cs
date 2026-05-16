@@ -33,11 +33,18 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void InitializeEvents()
         {
-            ApplySteamVRActionBinding();
+            if (IsEnable())
+                ApplySteamVRActionBinding();
 
             XSOEventSystem.OnTakeControlOfDesktopCursor += raycaster =>
             {
                 CurrentRaycaster = raycaster;
+            };
+
+            XConfig.MouseNavigation.SettingChanged += (sender, args) =>
+            {
+                if (IsEnable())
+                    ApplySteamVRActionBinding();
             };
         }
 
@@ -54,6 +61,8 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void MouseInputDeviceUpdate()
         {
+            if (!IsEnable()) return;
+
             // Back Navigation
             if (CheckActionTriggered("/actions/xsoverlay/in/MouseBack", ref ActionHandleBack, ref BackWasPressedLastFrame))
                 if (IsDesktopHover)
@@ -164,6 +173,11 @@ namespace xsoverlay_tweak.Patches
                 File.WriteAllText(filePath, root.ToString(Formatting.Indented));
                 Console.WriteLine("Manifest updated with actions and localization.");
             }
+        }
+
+        private static bool IsEnable()
+        {
+            return XConfig.MouseNavigation.Value;
         }
     }
 }
