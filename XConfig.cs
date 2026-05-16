@@ -37,13 +37,13 @@ Enable this to update the actual Desktop cursor before getting capture in the ne
             //?? Pointer
             ActivePointerColor = cfg.Bind("Pointer", "ActivePointerColor", true, "Determine the activated hand Pointer by red color.");
             ActivePointerOpacity = cfg.Bind("Pointer", "ActivePointerOpacity", 0.5f, "Determine the deactivated hand Pointer by opacity.");
-            PointerScaleMultiply = cfg.Bind("Pointer", "Multiply", 1f, "Multiply the Pointer scale from the common setting.");
+            PointerScaleMultiply = cfg.Bind("Pointer", "PointerScaleMultiply", 1f, "Multiply the Pointer scale from the common setting.");
             PointerDoubleClickDelay = cfg.Bind("Pointer", "PointerDoubleClickDelay", true, "Apply a Double Click Delay setting to the Pointer itself, not just the cursor.");
 
             //?? Mouse Navigation
-            MouseNavigation = cfg.Bind("Mouse Navigation", "Enable", false, @"Enable custom keybinding to simulate the side mouse Forward/Back button.
+            MouseNavigation = cfg.Bind("Mouse Navigation", "MouseNavigation", false, @"Enable custom keybinding to simulate the side mouse Forward/Back button.
 Change the button by clicking the Binding tab in the XSOverlay settings. Then edit the Current Binding, assign button action for Mouse Back/Forward");
-            MouseNavigationUseModifiedKey = cfg.Bind("Mouse Navigation", "UseModifiedKey", false, @"Using Alt+Left and Alt+Right instead of Mouse Input.
+            MouseNavigationUseModifiedKey = cfg.Bind("Mouse Navigation", "MouseNavigationUseModifiedKey", false, @"Using Alt+Left and Alt+Right instead of Mouse Input.
 Due to Mouse Input has to hover the cursor over the target window to interact, but the modified key will interact with the current focused window instead.");
         }
     }
