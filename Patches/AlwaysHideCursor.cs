@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace xsoverlay_tweak.Patches
 {
-    internal class AlwayHideCursor
+    internal class AlwaysHideCursor
     {
         // Static list to track all active window managers
         private static readonly List<WindowComponentManager> instanceRefs = [];
@@ -45,7 +45,7 @@ namespace xsoverlay_tweak.Patches
 
         private static bool IsEnable()
         {
-            return XConfig.AlwayHideCursor.Value;
+            return XConfig.AlwaysHideCursor.Value;
         }
     }
 }

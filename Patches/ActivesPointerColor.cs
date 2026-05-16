@@ -5,7 +5,7 @@ using XSOverlay;
 namespace xsoverlay_tweak.Patches
 {
     [HarmonyPatch(typeof(Raycaster))]
-    internal class ActivePointerColor
+    internal class ActivesPointerColor
     {
         [HarmonyPatch("UpdateHoveringOverlay")]
         [HarmonyPostfix]
@@ -34,7 +34,7 @@ namespace xsoverlay_tweak.Patches
 
         private static bool IsEnable()
         {
-            return XConfig.ActivePointerColor.Value;
+            return XConfig.ActivesPointerColor.Value;
         }
     }
 }

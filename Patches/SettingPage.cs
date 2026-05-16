@@ -17,9 +17,9 @@ namespace xsoverlay_tweak.Patches
         {
             public int RefreshRate;
             public bool AlwayUpdateCursor;
-            public bool AlwayHideCursor;
+            public bool AlwaysHideCursor;
             public bool PhysicalMouseDetector;
-            public bool ActivePointerColor;
+            public bool ActivesPointerColor;
             public float ActivePointerOpacity;
             public float PointerScaleMultiply;
             public bool PointerDoubleClickDelay;
@@ -43,9 +43,9 @@ namespace xsoverlay_tweak.Patches
             {
                 RefreshRate = XConfig.RefreshRate.Value,
                 AlwayUpdateCursor = XConfig.AlwayUpdateCursor.Value,
-                AlwayHideCursor = XConfig.AlwayHideCursor.Value,
+                AlwaysHideCursor = XConfig.AlwaysHideCursor.Value,
                 PhysicalMouseDetector = XConfig.PhysicalMouseDetector.Value,
-                ActivePointerColor = XConfig.ActivePointerColor.Value,
+                ActivesPointerColor = XConfig.ActivesPointerColor.Value,
                 ActivePointerOpacity = XConfig.ActivePointerOpacity.Value,
                 PointerScaleMultiply = XConfig.PointerScaleMultiply.Value,
                 PointerDoubleClickDelay = XConfig.PointerDoubleClickDelay.Value,
@@ -69,14 +69,14 @@ namespace xsoverlay_tweak.Patches
                 case "AlwayUpdateCursor":
                     XConfig.AlwayUpdateCursor.Value = bool.Parse(value);
                     break;
-                case "AlwayHideCursor":
-                    XConfig.AlwayHideCursor.Value = bool.Parse(value);
+                case "AlwaysHideCursor":
+                    XConfig.AlwaysHideCursor.Value = bool.Parse(value);
                     break;
                 case "PhysicalMouseDetector":
                     XConfig.PhysicalMouseDetector.Value = bool.Parse(value);
                     break;
-                case "ActivePointerColor":
-                    XConfig.ActivePointerColor.Value = bool.Parse(value);
+                case "ActivesPointerColor":
+                    XConfig.ActivesPointerColor.Value = bool.Parse(value);
                     break;
                 case "ActivePointerOpacity":
                     XConfig.ActivePointerOpacity.Value = float.Parse(value);
