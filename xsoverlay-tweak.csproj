@@ -20,6 +20,14 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="Patches\Setting\setting.js" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Patches\Setting\setting.js" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Include="Patches\AlwayUpdateCursor.cs" />
   </ItemGroup>
   
