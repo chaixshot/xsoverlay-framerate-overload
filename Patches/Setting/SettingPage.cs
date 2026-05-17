@@ -65,43 +65,43 @@ namespace xsoverlay_tweak.Patches.Setting
         {
             switch (name)
             {
-                case "XSOverlayTweak_EnableRefreshRate":
+                case "XSOverlayTweak.EnableRefreshRate":
                     XConfig.EnableRefreshRate.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_RefreshRate":
+                case "XSOverlayTweak.RefreshRate":
                     XConfig.RefreshRate.Value = int.Parse(value);
                     break;
-                case "XSOverlayTweak_AlwayUpdateCursor":
+                case "XSOverlayTweak.AlwayUpdateCursor":
                     XConfig.AlwayUpdateCursor.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_AlwaysHideCursor":
+                case "XSOverlayTweak.AlwaysHideCursor":
                     XConfig.AlwaysHideCursor.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_PhysicalMouseDetector":
+                case "XSOverlayTweak.PhysicalMouseDetector":
                     XConfig.PhysicalMouseDetector.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_ActivePointerColor":
+                case "XSOverlayTweak.ActivePointerColor":
                     XConfig.ActivePointerColor.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_ActivePointerOpacity":
+                case "XSOverlayTweak.ActivePointerOpacity":
                     XConfig.ActivePointerOpacity.Value = int.Parse(value);
                     break;
-                case "XSOverlayTweak_PointerScaleMultiply":
+                case "XSOverlayTweak.PointerScaleMultiply":
                     XConfig.PointerScaleMultiply.Value = int.Parse(value);
                     break;
-                case "XSOverlayTweak_PointerDoubleClickDelay":
+                case "XSOverlayTweak.PointerDoubleClickDelay":
                     XConfig.PointerDoubleClickDelay.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_MouseNavigation":
+                case "XSOverlayTweak.MouseNavigation":
                     XConfig.MouseNavigation.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_MouseNavigationUseModifiedKey":
+                case "XSOverlayTweak.MouseNavigationUseModifiedKey":
                     XConfig.MouseNavigationUseModifiedKey.Value = bool.Parse(value);
                     break;
-                case "XSOverlayTweak_CheckForUpdate":
+                case "XSOverlayTweak.CheckForUpdate":
                     Utils.Update.CheckForUpdate();
                     break;
-                case "XSOverlayTweak_OpenGitHub":
+                case "XSOverlayTweak.OpenGitHub":
                     Utils.Update.OpenGitHubPage();
                     break;
             }

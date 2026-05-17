@@ -16,35 +16,35 @@ function InjectKBOSCTab() {
         const SECTIONS = [
             {
                 name: 'Refresh Rate', priority: 1, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_EnableRefreshRate', name: 'Enable', description: 'Overriding the XSOverlay render refresh rate.', default: false },
-                    { type: Ui.ComponentType.Slider, id: 'XSOverlayTweak_RefreshRate', name: 'Refresh Rate', description: 'The target frame rate for XSOverlay rendering.<br>Higher values improve responsiveness but increase CPU usage.', default: 90, options: [90, 500, 10], unit: 'FPS' }
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.EnableRefreshRate', name: 'Enable', description: 'Overriding the XSOverlay render refresh rate.', default: false },
+                    { type: Ui.ComponentType.Slider, id: 'XSOverlayTweak.RefreshRate', name: 'Refresh Rate', description: 'The target frame rate for XSOverlay rendering.<br>Higher values improve responsiveness but increase CPU usage.', default: 90, options: [90, 500, 10], unit: 'FPS' }
                 ]
             },
             {
                 name: 'Cursor', priority: 2, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_AlwayUpdateCursor', name: 'Always Update Cursor', description: 'Reduces cursor latency by sending cursor position data from the Pointer before the desktop frame is captured.<br>Without this, the cursor often appears to lag one frame behind the Pointer position.', default: true },
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_AlwaysHideCursor', name: 'Always Hide Cursor', description: 'Forcefully hide the system cursor in Window Capture overlays.', default: false },
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_PhysicalMouseDetector', name: 'Physical Mouse Detector', description: 'Release the Pointer control when physical mouse movement is detected.<br>Pointer click to regain control.', default: true }
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.AlwayUpdateCursor', name: 'Always Update Cursor', description: 'Reduces cursor latency by sending cursor position data from the Pointer before the desktop frame is captured.<br>Without this, the cursor often appears to lag one frame behind the Pointer position.', default: true },
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.AlwaysHideCursor', name: 'Always Hide Cursor', description: 'Forcefully hide the system cursor in Window Capture overlays.', default: false },
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.PhysicalMouseDetector', name: 'Physical Mouse Detector', description: 'Release the Pointer control when physical mouse movement is detected.<br>Pointer click to regain control.', default: true }
                 ]
             },
             {
                 name: 'Pointer', priority: 3, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_ActivePointerColor', name: 'Active Pointer Highlight', description: 'Highlight the non-active hand\'s pointer in red for easier identification.', default: true },
-                    { type: Ui.ComponentType.Slider, id: 'XSOverlayTweak_ActivePointerOpacity', name: 'Inactive Opacity', description: 'Set the opacity of the non-active hand\'s pointer.', default: 50, options: [0, 100, 10], unit: '%' },
-                    { type: Ui.ComponentType.Slider, id: 'XSOverlayTweak_PointerScaleMultiply', name: 'Scale Multiplier', description: 'Multiplier for the Pointer scale relative to the XSOverlay setting.', default: 100, options: [100, 1000, 50], unit: '%' },
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_PointerDoubleClickDelay', name: 'Double Click Delay', description: 'Apply a Double Click Delay from XSOverlay setting to the Pointer itself, not just the cursor.', default: true }
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.ActivePointerColor', name: 'Active Pointer Highlight', description: 'Highlight the non-active hand\'s pointer in red for easier identification.', default: true },
+                    { type: Ui.ComponentType.Slider, id: 'XSOverlayTweak.ActivePointerOpacity', name: 'Inactive Opacity', description: 'Set the opacity of the non-active hand\'s pointer.', default: 50, options: [0, 100, 10], unit: '%' },
+                    { type: Ui.ComponentType.Slider, id: 'XSOverlayTweak.PointerScaleMultiply', name: 'Scale Multiplier', description: 'Multiplier for the Pointer scale relative to the XSOverlay setting.', default: 100, options: [100, 1000, 50], unit: '%' },
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.PointerDoubleClickDelay', name: 'Double Click Delay', description: 'Apply a Double Click Delay from XSOverlay setting to the Pointer itself, not just the cursor.', default: true }
                 ]
             },
             {
                 name: 'Mouse Navigation', priority: 4, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_MouseNavigation', name: 'Enable', description: 'Custom keybindings for Mouse Forward/Back navigation.<br>Configuration by press <b>Bindings</b> tab in XSOverlay settings to open SteamVR bindings menu.<br>Edit the Current Binding and add a button for <b>MouseBack/MouseForward</b>.', default: true },
-                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_MouseNavigationUseModifiedKey', name: 'Use Alt+Left/Right', description: 'Use Alt+Left/Right keyboard shortcuts for navigation instead of mouse clicks.<br>Targets the focused window instead of the hovered window.', default: false }
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.MouseNavigation', name: 'Enable', description: 'Custom keybindings for Mouse Forward/Back navigation.<br>Configuration by press <b>Bindings</b> tab in XSOverlay settings to open SteamVR bindings menu.<br>Edit the Current Binding and add a button for <b>MouseBack/MouseForward</b>.', default: true },
+                    { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak.MouseNavigationUseModifiedKey', name: 'Use Alt+Left/Right', description: 'Use Alt+Left/Right keyboard shortcuts for navigation instead of mouse clicks.<br>Targets the focused window instead of the hovered window.', default: false }
                 ]
             },
             {
                 name: 'About', priority: 5, settings: [
-                    { type: Ui.ComponentType.Button, id: 'XSOverlayTweak_CheckForUpdate', name: 'Check for Updates', description: 'Check for the latest version of XSOverlay Tweak.', default: true },
-                    { type: Ui.ComponentType.Button, id: 'XSOverlayTweak_OpenGitHub', name: 'Open GitHub Page', description: 'Visit the XSOverlay Tweak GitHub page.', default: true },
+                    { type: Ui.ComponentType.Button, id: 'XSOverlayTweak.CheckForUpdate', name: 'Check for Updates', description: 'Check for the latest version of XSOverlay Tweak.', default: true },
+                    { type: Ui.ComponentType.Button, id: 'XSOverlayTweak.OpenGitHub', name: 'Open GitHub Page', description: 'Visit the XSOverlay Tweak GitHub page.', default: true },
                 ]
             }
 
