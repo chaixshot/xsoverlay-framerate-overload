@@ -8,7 +8,7 @@ using XSOverlay;
 using XSOverlay.WebApp;
 using XSOverlay.Websockets.API;
 
-namespace xsoverlay_tweak.Patches
+namespace xsoverlay_tweak.Patches.Setting
 {
     internal class SettingPage
     {
@@ -110,7 +110,7 @@ namespace xsoverlay_tweak.Patches
             // Lisen for WebView loaded
             wv._webView.WebView.LoadProgressChanged += (sender, args) =>
             {
-                if (args.Type == ProgressChangeType.Started)
+                if (args.Type == ProgressChangeType.Finished)
                 {
                     wv._webView.WebView.ExecuteJavaScript(jsCode, (result) =>
                     {

@@ -34,7 +34,7 @@ public class Plugin : BaseUnityPlugin
     {
         Instance = this;
 
-        harmony.PatchAll(typeof(Patches.SettingPage));
+        harmony.PatchAll(typeof(Patches.Setting.SettingPage));
 
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is started!");
     }
