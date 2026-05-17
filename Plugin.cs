@@ -23,7 +23,7 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll(typeof(Patches.PhysicalMouseDetector));
         harmony.PatchAll(typeof(Patches.MouseNavigation));
 
-        harmony.PatchAll(typeof(Patches.ActivesPointerColor));
+        harmony.PatchAll(typeof(Patches.ActivePointerColor));
         harmony.PatchAll(typeof(Patches.PointerDoubleClickDelay));
         harmony.PatchAll(typeof(Patches.PointerScaleMultiply));
 

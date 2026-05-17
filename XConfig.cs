@@ -10,7 +10,7 @@ namespace xsoverlay_tweak
         public static ConfigEntry<bool> AlwayUpdateCursor;
         public static ConfigEntry<bool> AlwaysHideCursor;
 
-        public static ConfigEntry<bool> ActivesPointerColor;
+        public static ConfigEntry<bool> ActivePointerColor;
         public static ConfigEntry<float> ActivePointerOpacity;
         public static ConfigEntry<float> PointerScaleMultiply;
         public static ConfigEntry<bool> PointerDoubleClickDelay;
@@ -31,7 +31,7 @@ namespace xsoverlay_tweak
             PhysicalMouseDetector = cfg.Bind("Cursor", "PhysicalMouseDetector", true, "Automatically release VR pointer control when physical mouse movement is detected. Control is regained upon clicking.");
 
             //?? Pointer
-            ActivesPointerColor = cfg.Bind("Pointer", "ActivesPointerColor", true, "Highlight the non-active hand's pointer in red for easier identification.");
+            ActivePointerColor = cfg.Bind("Pointer", "ActivePointerColor", true, "Highlight the non-active hand's pointer in red for easier identification.");
             ActivePointerOpacity = cfg.Bind("Pointer", "ActivePointerOpacity", 0.5f, "Set the opacity of the non-active hand's pointer.");
             PointerScaleMultiply = cfg.Bind("Pointer", "PointerScaleMultiply", 1f, "Multiplier for the pointer scale relative to the global XSOverlay settings.");
             PointerDoubleClickDelay = cfg.Bind("Pointer", "PointerDoubleClickDelay", true, "Apply a Double Click Delay setting to the Pointer itself, not just the cursor.");
