@@ -16,29 +16,29 @@ function InjectKBOSCTab() {
         const SECTIONS = [
             {
                 name: 'Refresh Rate', priority: 1, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'EnableRefreshRate', name: 'Enable', description: 'Enable custom refresh rate override.', default: false },
-                    { type: Ui.ComponentType.Slider, id: 'RefreshRate', name: 'Refresh Rate', description: 'Change the XSOverlay render frame rate.<br>The higher value means more responsive and more CPU usage.', default: 90, options: [90, 500, 10], unit: 'FPS' }
+                    { type: Ui.ComponentType.Toggle, id: 'EnableRefreshRate', name: 'Enable', description: 'Enable overriding the XSOverlay render refresh rate.', default: false },
+                    { type: Ui.ComponentType.Slider, id: 'RefreshRate', name: 'Refresh Rate', description: 'The target frame rate for XSOverlay rendering.<br>Higher values improve responsiveness but increase CPU usage.', default: 90, options: [90, 500, 10], unit: 'FPS' }
                 ]
             },
             {
-                name: 'Mouse Navigation', priority: 2, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'MouseNavigation', name: 'Mouse Navigation', description: 'Enable custom keybinding to simulate the side mouse Forward/Back button.', default: true },
-                    { type: Ui.ComponentType.Toggle, id: 'MouseNavigationUseModifiedKey', name: 'Use Alt+Left/Right', description: 'Using Alt+Left and Alt+Right instead of Mouse Input to interact with focused windows.', default: false }
+                name: 'Cursor', priority: 2, settings: [
+                    { type: Ui.ComponentType.Toggle, id: 'AlwayUpdateCursor', name: 'Always Update Cursor', description: 'Reduces perceived cursor latency by ensuring the system cursor is updated immediately before the desktop frame is captured.<br>Without this, the cursor often appears to lag one frame behind the actual pointer position.', default: true },
+                    { type: Ui.ComponentType.Toggle, id: 'AlwaysHideCursor', name: 'Always Hide Cursor', description: 'Forcefully hide the system cursor in Window Capture overlays.', default: false },
+                    { type: Ui.ComponentType.Toggle, id: 'PhysicalMouseDetector', name: 'Physical Mouse Detector', description: 'Automatically release VR pointer control when physical mouse movement is detected. Click to regain control.', default: true }
                 ]
             },
             {
-                name: 'Cursor', priority: 3, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'AlwayUpdateCursor', name: 'Always Update Cursor', description: 'Update the actual Desktop cursor before capturing the next frame for lower perceived latency.', default: true },
-                    { type: Ui.ComponentType.Toggle, id: 'AlwaysHideCursor', name: 'Always Hide Cursor', description: 'Forcefully hide the cursor in Window Capture overlays.', default: false },
-                    { type: Ui.ComponentType.Toggle, id: 'PhysicalMouseDetector', name: 'Physical Mouse Detector', description: 'Release pointer control when physical mouse movement is detected.', default: true }
+                name: 'Pointer', priority: 3, settings: [
+                    { type: Ui.ComponentType.Toggle, id: 'ActivesPointerColor', name: 'Active Pointer Highlight', description: 'Highlight the non-active hand\'s pointer in red for easier identification.', default: true },
+                    { type: Ui.ComponentType.Slider, id: 'ActivePointerOpacity', name: 'Inactive Opacity', description: 'Set the opacity of the non-active hand\'s pointer.', default: 0.5, options: [0.0, 1.0, 0.1], unit: 'Unit' },
+                    { type: Ui.ComponentType.Slider, id: 'PointerScaleMultiply', name: 'Scale Multiplier', description: 'Multiplier for the pointer scale relative to the global XSOverlay settings.', default: 1.0, options: [1.0, 10.0, 0.1], unit: 'Unit' },
+                    { type: Ui.ComponentType.Toggle, id: 'PointerDoubleClickDelay', name: 'Double Click Delay', description: 'Apply a Double Click Delay setting to the Pointer itself, not just the cursor.', default: true }
                 ]
             },
             {
-                name: 'Pointer', priority: 4, settings: [
-                    { type: Ui.ComponentType.Toggle, id: 'ActivesPointerColor', name: 'Active Pointer Highlight', description: 'Color the active hand\'s pointer red for easier identification.', default: true },
-                    { type: Ui.ComponentType.Slider, id: 'ActivePointerOpacity', name: 'Inactive Opacity', description: 'Set the opacity of the non-active hand pointer.', default: 0.5, options: [0.0, 1.0, 0.1], unit: '' },
-                    { type: Ui.ComponentType.Slider, id: 'PointerScaleMultiply', name: 'Scale Multiplier', description: 'Multiply the pointer scale relative to global settings.', default: 1.0, options: [1.0, 10.0, 0.1], unit: '' },
-                    { type: Ui.ComponentType.Toggle, id: 'PointerDoubleClickDelay', name: 'Double Click Delay', description: 'Sync pointer visual feedback with the system double click delay.', default: true }
+                name: 'Mouse Navigation', priority: 4, settings: [
+                    { type: Ui.ComponentType.Toggle, id: 'MouseNavigation', name: 'Enable', description: 'Enable custom keybindings for Mouse Forward/Back navigation. Configure these in the SteamVR \'Binding\' tab.', default: true },
+                    { type: Ui.ComponentType.Toggle, id: 'MouseNavigationUseModifiedKey', name: 'Use Alt+Left/Right', description: 'Use Alt+Left/Right keyboard shortcuts for navigation instead of mouse clicks. Targets the focused window instead of the hovered window.', default: false }
                 ]
             }
 
