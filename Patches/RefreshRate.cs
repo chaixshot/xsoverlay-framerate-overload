@@ -19,6 +19,12 @@ namespace xsoverlay_tweak.Patches
         {
             if (__instance.HMDRefreshRate > 0)
                 FrameInterval = 1f / (float)__instance.HMDRefreshRate;
+
+            // Setting changed
+            XConfig.EnableRefreshRate.SettingChanged += (sender, args) =>
+            {
+                AccessTools.Method(typeof(DeviceManager), "GetHMDRefreshRate").Invoke(__instance, null);
+            };
         }
 
         [HarmonyPatch(typeof(DeviceManager), "GetHMDRefreshRate")]
