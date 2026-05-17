@@ -41,13 +41,13 @@ namespace xsoverlay_tweak.Utils
             }
             catch (Exception ex)
             {
-                Notification.Send("XSOverlay Tweak", $"Update Check Failed:\n\"{ex.Message}\"");
+                Notification.Send(MyPluginInfo.PLUGIN_NAME, $"Update Check Failed:\n\"{ex.Message}\"");
                 return;
             }
 
             if (!string.IsNullOrEmpty(latestVersion) && latestVersion != currentVersion)
             {
-                Notification.Send("XSOverlay Tweak", $"A new version of XSOverlay Tweak <b>{latestVersion}</b> is available.\nYou are currently using version <b>{MyPluginInfo.PLUGIN_VERSION}</b>.");
+                Notification.Send(MyPluginInfo.PLUGIN_NAME, $"A new version of {MyPluginInfo.PLUGIN_NAME} <b>{latestVersion}</b> is available.\nYou are currently using version <b>{MyPluginInfo.PLUGIN_VERSION}</b>.");
             }
         }
 
@@ -60,11 +60,11 @@ namespace xsoverlay_tweak.Utils
                     FileName = GitHubRepoUrl,
                     UseShellExecute = true
                 });
-                Notification.Send("XSOverlay Tweak", "Opening GitHub page in default browser...");
+                Notification.Send(MyPluginInfo.PLUGIN_NAME, "Opening GitHub page in default browser...");
             }
             catch (Exception ex)
             {
-                Notification.Send("XSOverlay Tweak", $"Failed to open GitHub page:\n\"{ex.Message}\"");
+                Notification.Send(MyPluginInfo.PLUGIN_NAME, $"Failed to open GitHub page:\n\"{ex.Message}\"");
             }
         }
     }

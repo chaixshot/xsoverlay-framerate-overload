@@ -45,7 +45,7 @@ namespace xsoverlay_tweak.Patches
             {
                 if (IsEnable())
                     if (ApplySteamVRActionBinding())
-                        Utils.Notification.Send("XSOverlay Tweak - Mouse Navigation", $"When enabling Mouse Navigation for the first time, you have to restart XSOverlay to take effect.", 10);
+                        Utils.Notification.Send($"{MyPluginInfo.PLUGIN_NAME} - Mouse Navigation", $"When enabling Mouse Navigation for the first time, you have to restart {MyPluginInfo.PLUGIN_NAME} to take effect.", 10);
             };
         }
 

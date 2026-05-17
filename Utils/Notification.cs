@@ -15,7 +15,7 @@ namespace xsoverlay_tweak.Utils
                 messageType = 1,
                 timeout = timeout,
                 height = CalculateHeight(content),
-                sourceApp = "XSOverlay Tweak",
+                sourceApp = MyPluginInfo.PLUGIN_NAME,
                 volume = 0.5f
             };
 
