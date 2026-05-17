@@ -18,13 +18,18 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
         XConfig.AllConfig(Config);
 
-        harmony.PatchAll(typeof(Patches.RefreshRate));
-        harmony.PatchAll(typeof(Patches.ActivesPointerColor));
+        harmony.PatchAll(typeof(Patches.AlwayUpdateCursor));
         harmony.PatchAll(typeof(Patches.AlwaysHideCursor));
-        harmony.PatchAll(typeof(Patches.MouseNavigation));
-        harmony.PatchAll(typeof(Patches.PointerDoubleClickDelay));
         harmony.PatchAll(typeof(Patches.PhysicalMouseDetector));
+        harmony.PatchAll(typeof(Patches.MouseNavigation));
+
+        harmony.PatchAll(typeof(Patches.ActivesPointerColor));
+        harmony.PatchAll(typeof(Patches.PointerDoubleClickDelay));
         harmony.PatchAll(typeof(Patches.PointerScaleMultiply));
+
+        harmony.PatchAll(typeof(Patches.RefreshRate));
+
+        harmony.PatchAll(typeof(Patches.Setting.SettingPage));
 
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }
@@ -33,8 +38,9 @@ public class Plugin : BaseUnityPlugin
     {
         Instance = this;
 
-        harmony.PatchAll(typeof(Patches.AlwayUpdateCursor));
-        harmony.PatchAll(typeof(Patches.Setting.SettingPage));
+        // Set default refresh rate to HMD refresh rate if it's not set by user
+        if (XConfig.RefreshRate.Value == -1)
+            XConfig.RefreshRate.Value = DeviceManager.Instance.HMDRefreshRate;
 
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is started!");
     }
