@@ -25,6 +25,11 @@ namespace xsoverlay_tweak.Patches
             {
                 AccessTools.Method(typeof(DeviceManager), "GetHMDRefreshRate").Invoke(__instance, null);
             };
+
+            XConfig.RefreshRate.SettingChanged += (sender, args) =>
+            {
+                AccessTools.Method(typeof(DeviceManager), "GetHMDRefreshRate").Invoke(__instance, null);
+            };
         }
 
         [HarmonyPatch(typeof(DeviceManager), "GetHMDRefreshRate")]
