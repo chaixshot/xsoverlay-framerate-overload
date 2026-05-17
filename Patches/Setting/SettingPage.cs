@@ -98,6 +98,12 @@ namespace xsoverlay_tweak.Patches.Setting
                 case "XSOverlayTweak_MouseNavigationUseModifiedKey":
                     XConfig.MouseNavigationUseModifiedKey.Value = bool.Parse(value);
                     break;
+                case "XSOverlayTweak_CheckForUpdate":
+                    Utils.Update.CheckForUpdate();
+                    break;
+                case "XSOverlayTweak_OpenGitHub":
+                    Utils.Update.OpenGitHubPage();
+                    break;
             }
 
             return true;

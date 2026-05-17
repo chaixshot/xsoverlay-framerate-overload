@@ -40,6 +40,12 @@ function InjectKBOSCTab() {
                     { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_MouseNavigation', name: 'Enable', description: 'Custom keybindings for Mouse Forward/Back navigation.<br>Configuration by press <b>Bindings</b> tab in XSOverlay settings to open SteamVR bindings menu.<br>Edit the Current Binding and add a button for <b>MouseBack/MouseForward</b>.', default: true },
                     { type: Ui.ComponentType.Toggle, id: 'XSOverlayTweak_MouseNavigationUseModifiedKey', name: 'Use Alt+Left/Right', description: 'Use Alt+Left/Right keyboard shortcuts for navigation instead of mouse clicks.<br>Targets the focused window instead of the hovered window.', default: false }
                 ]
+            },
+            {
+                name: 'About', priority: 5, settings: [
+                    { type: Ui.ComponentType.Button, id: 'XSOverlayTweak_CheckForUpdate', name: 'Check for Updates', description: 'Check for the latest version of XSOverlay Tweak.', default: true },
+                    { type: Ui.ComponentType.Button, id: 'XSOverlayTweak_OpenGitHub', name: 'Open GitHub Page', description: 'Visit the XSOverlay Tweak GitHub page.', default: true },
+                ]
             }
 
             // addSetting(Cursor, Ui.ComponentType.Button, 'Button', 'Button', 'Button', null);
