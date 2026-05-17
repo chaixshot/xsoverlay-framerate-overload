@@ -18,7 +18,6 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
         XConfig.AllConfig(Config);
 
-        harmony.PatchAll(typeof(Patches.AlwayUpdateCursor));
         harmony.PatchAll(typeof(Patches.RefreshRate));
         harmony.PatchAll(typeof(Patches.ActivesPointerColor));
         harmony.PatchAll(typeof(Patches.AlwaysHideCursor));
@@ -34,6 +33,7 @@ public class Plugin : BaseUnityPlugin
     {
         Instance = this;
 
+        harmony.PatchAll(typeof(Patches.AlwayUpdateCursor));
         harmony.PatchAll(typeof(Patches.Setting.SettingPage));
 
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is started!");

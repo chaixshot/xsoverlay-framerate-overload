@@ -20,21 +20,32 @@ namespace xsoverlay_tweak.Patches
         [HarmonyPostfix]
         public static void Start(Raycaster __instance)
         {
-            if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
+            if (!IsController(__instance)) return;
 
+            // Add to Update loop array
             var SyncedOverlayUpdate = AccessTools.Method(typeof(Raycaster), "SyncedOverlayUpdate");
             _handArray.Add(new HandData
             {
                 Instance = __instance,
                 SyncedOverlayUpdate = AccessTools.MethodDelegate<SyncedUpdateDelegate>(SyncedOverlayUpdate)
             });
+
+            // Setting changed
+            XConfig.AlwayUpdateCursor.SettingChanged += (sender, args) =>
+            {
+                if (IsEnable())
+                    RemoveUpdatedOverlay(__instance);
+                else
+                    AddUpdatedOverlay(__instance);
+            };
         }
 
         [HarmonyPatch("SubscribeToEvents"), HarmonyPatch("UnsubscribeFromEvents")]
         [HarmonyPostfix]
         public static void SubscribeToEvents(Raycaster __instance)
         {
-            if (__instance.HapticDeviceName == Raycaster.HapticDevice.None) return;
+            if (!IsEnable()) return;
+            if (!IsController(__instance)) return;
 
             RemoveUpdatedOverlay(__instance);
         }
@@ -61,6 +72,14 @@ namespace xsoverlay_tweak.Patches
             }
         }
 
+        private static void AddUpdatedOverlay(Raycaster __instance)
+        {
+            // Add listener from overlay update 
+            var SyncedOverlayUpdate = AccessTools.Method(typeof(Raycaster), "SyncedOverlayUpdate");
+            var handler = (Action<Unity_Overlay>)Delegate.CreateDelegate(typeof(Action<Unity_Overlay>), __instance, SyncedOverlayUpdate);
+            XSOEventSystem.OnUpdatedOverlay += handler;
+        }
+
         private static void RemoveUpdatedOverlay(Raycaster __instance)
         {
             // Remove listener from overlay update 
@@ -72,6 +91,10 @@ namespace xsoverlay_tweak.Patches
         private static bool IsEnable()
         {
             return XConfig.AlwayUpdateCursor.Value;
+        }
+        private static bool IsController(Raycaster __instance)
+        {
+            return __instance.HapticDeviceName != Raycaster.HapticDevice.None;
         }
     }
 }
