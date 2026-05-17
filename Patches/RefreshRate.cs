@@ -108,7 +108,7 @@ namespace xsoverlay_tweak.Patches
 
         private static bool IsEnable()
         {
-            return !XConfig.RefreshRate.Value.Equals(0);
+            return XConfig.EnableRefreshRate.Value;
         }
 
         //!! Test game fps

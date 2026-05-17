@@ -15,8 +15,9 @@ function InjectKBOSCTab() {
 
         const SECTIONS = [
             {
-                name: 'RefreshRate', priority: 1, settings: [
-                    { type: Ui.ComponentType.Slider, id: 'RefreshRate', name: 'Refresh Rate', description: 'Change the XSOverlay render frame rate.', default: 0, options: [-1, 1000, 10], unit: 'FPS' }
+                name: 'Refresh Rate', priority: 1, settings: [
+                    { type: Ui.ComponentType.Toggle, id: 'EnableRefreshRate', name: 'Enable', description: 'Enable custom refresh rate override.', default: false },
+                    { type: Ui.ComponentType.Slider, id: 'RefreshRate', name: 'Refresh Rate', description: 'Change the XSOverlay render frame rate.<br>The higher value means more responsive and more CPU usage.', default: 90, options: [90, 500, 10], unit: 'FPS' }
                 ]
             },
             {

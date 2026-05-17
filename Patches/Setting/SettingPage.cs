@@ -15,6 +15,7 @@ namespace xsoverlay_tweak.Patches.Setting
         [Serializable]
         public class TweakSettings
         {
+            public bool EnableRefreshRate;
             public int RefreshRate;
             public bool AlwayUpdateCursor;
             public bool AlwaysHideCursor;
@@ -41,6 +42,7 @@ namespace xsoverlay_tweak.Patches.Setting
         {
             TweakSettings settings = new()
             {
+                EnableRefreshRate = XConfig.EnableRefreshRate.Value,
                 RefreshRate = XConfig.RefreshRate.Value,
                 AlwayUpdateCursor = XConfig.AlwayUpdateCursor.Value,
                 AlwaysHideCursor = XConfig.AlwaysHideCursor.Value,
@@ -63,6 +65,9 @@ namespace xsoverlay_tweak.Patches.Setting
         {
             switch (name)
             {
+                case "EnableRefreshRate":
+                    XConfig.EnableRefreshRate.Value = bool.Parse(value);
+                    break;
                 case "RefreshRate":
                     XConfig.RefreshRate.Value = int.Parse(value);
                     break;

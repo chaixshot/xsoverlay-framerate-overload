@@ -4,6 +4,7 @@ namespace xsoverlay_tweak
 {
     internal class XConfig
     {
+        public static ConfigEntry<bool> EnableRefreshRate;
         public static ConfigEntry<int> RefreshRate;
 
         public static ConfigEntry<bool> AlwayUpdateCursor;
@@ -20,12 +21,10 @@ namespace xsoverlay_tweak
 
         public static void AllConfig(ConfigFile cfg)
         {
-            //?? General
-            RefreshRate = cfg.Bind("General", "RefreshRate", 0, @"Change the XSOverlay render frame rate.
-The higher value means more responsive and more CPU usage.
-Set to -1 means unlimited.
-Set to 0 means do the same as your VR Headset refresh rate as default XSOverlay does.
-A value less than your VR Headset refresh rate means no effect.");
+            //?? RefreshRate
+            EnableRefreshRate = cfg.Bind("RefreshRate", "EnableRefreshRate", false, "Enable custom refresh rate override.");
+            RefreshRate = cfg.Bind("RefreshRate", "RefreshRate", -1, @"Change the XSOverlay render frame rate.
+The higher value means more responsive and more CPU usage.");
 
             //?? Cursor
             AlwayUpdateCursor = cfg.Bind("Cursor", "AlwayUpdateCursor", true, @"By default, XSOverlay displays the captured Desktop before sending new cursor position data to the actual cursor
