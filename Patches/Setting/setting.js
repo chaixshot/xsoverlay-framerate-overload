@@ -98,8 +98,24 @@ function InjectKBOSCTab() {
             const componentCreators = {
                 [Ui.ComponentType.Toggle]: () => Ui.Toggle(setting, name, defaultValue, null, sectionObj.Background),
                 [Ui.ComponentType.Button]: () => Ui.Button(setting, sectionObj.Background),
-                [Ui.ComponentType.Slider]: () => Ui.Slider(setting, name, defaultValue, opts, opts1, sectionObj.Background, 300),
-                [Ui.ComponentType.Dropdown]: () => Ui.Dropdown(setting, name, defaultValue, opts, sectionObj.Background, 300)
+                [Ui.ComponentType.Slider]: () => {
+                    Ui.Slider(setting, name, defaultValue, opts, opts1, sectionObj.Background, 300);
+                    const el = document.getElementById(id);
+                    if (el) Ui.UpdateSliderUI(el, defaultValue);
+                },
+                [Ui.ComponentType.Dropdown]: () => {
+                    Ui.Dropdown(setting, name, defaultValue, opts, sectionObj.Background, 300);
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const options = el.querySelectorAll('.selectopt');
+                        for (const opt of options) {
+                            if (opt.getAttribute('internalName') === defaultValue || opt.getAttribute('index') === String(defaultValue)) {
+                                opt.checked = true;
+                                break;
+                            }
+                        }
+                    }
+                }
             };
 
             if (componentCreators[type]) componentCreators[type]();
