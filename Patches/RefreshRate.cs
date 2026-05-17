@@ -110,32 +110,5 @@ namespace xsoverlay_tweak.Patches
         {
             return XConfig.EnableRefreshRate.Value;
         }
-
-        //!! Test game fps
-        /*private static float _lastFrameTime;
-        public static float CurrentFPS;
-        [HarmonyPatch(typeof(Raycaster), "Update")]
-        [HarmonyPostfix]
-        public static void GetFPS(Raycaster __instance)
-        {
-            //Application.targetFrameRate = -1;
-            //QualitySettings.vSyncCount = 0;
-            //Time.fixedDeltaTime = 1f / 240f;
-
-            if (!(__instance.DeviceIdx is Raycaster.DeviceIdxFetch.RightHand)) return;
-
-            // Time.unscaledTime is best to avoid issues if the game is slowed down
-            float currentTime = UnityEngine.Time.unscaledTime;
-            float deltaTime = currentTime - _lastFrameTime;
-
-            if (deltaTime > 0)
-            {
-                CurrentFPS = 1.0f / deltaTime;
-            }
-
-            _lastFrameTime = currentTime;
-
-            Plugin.Logger.LogError($"Current RefreshRate: {CurrentFPS}");
-        }*/
     }
 }
