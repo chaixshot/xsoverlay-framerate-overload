@@ -30,8 +30,8 @@ function InjectKBOSCTab() {
             {
                 name: 'Pointer', priority: 3, settings: [
                     { type: Ui.ComponentType.Toggle, id: 'ActivePointerColor', name: 'Active Pointer Highlight', description: 'Highlight the non-active hand\'s pointer in red for easier identification.', default: true },
-                    { type: Ui.ComponentType.Slider, id: 'ActivePointerOpacity', name: 'Inactive Opacity', description: 'Set the opacity of the non-active hand\'s pointer.', default: 0.5, options: [0.0, 1.0, 0.1], unit: 'Unit' },
                     { type: Ui.ComponentType.Slider, id: 'PointerScaleMultiply', name: 'Scale Multiplier', description: 'Multiplier for the pointer scale relative to the global XSOverlay settings.', default: 100, options: [100, 1000, 50], unit: '%' },
+                    { type: Ui.ComponentType.Slider, id: 'ActivePointerOpacity', name: 'Inactive Opacity', description: 'Set the opacity of the non-active hand\'s pointer.', default: 50, options: [0, 100, 10], unit: '%' },
                     { type: Ui.ComponentType.Toggle, id: 'PointerDoubleClickDelay', name: 'Double Click Delay', description: 'Apply a Double Click Delay setting to the Pointer itself, not just the cursor.', default: true }
                 ]
             },
