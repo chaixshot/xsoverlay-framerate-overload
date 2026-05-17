@@ -22,7 +22,7 @@ namespace xsoverlay_tweak.Patches.Setting
             public bool PhysicalMouseDetector;
             public bool ActivePointerColor;
             public float ActivePointerOpacity;
-            public float PointerScaleMultiply;
+            public int PointerScaleMultiply;
             public bool PointerDoubleClickDelay;
             public bool MouseNavigation;
             public bool MouseNavigationUseModifiedKey;
@@ -87,7 +87,7 @@ namespace xsoverlay_tweak.Patches.Setting
                     XConfig.ActivePointerOpacity.Value = float.Parse(value);
                     break;
                 case "PointerScaleMultiply":
-                    XConfig.PointerScaleMultiply.Value = float.Parse(value);
+                    XConfig.PointerScaleMultiply.Value = int.Parse(value);
                     break;
                 case "PointerDoubleClickDelay":
                     XConfig.PointerDoubleClickDelay.Value = bool.Parse(value);

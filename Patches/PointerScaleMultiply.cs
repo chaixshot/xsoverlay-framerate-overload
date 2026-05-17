@@ -25,7 +25,7 @@ namespace xsoverlay_tweak.Patches
 
         private static float GetScale()
         {
-            return XSettingsManager.Instance.Settings.PointerScale * XConfig.PointerScaleMultiply.Value;
+            return XSettingsManager.Instance.Settings.PointerScale * (XConfig.PointerScaleMultiply.Value / 100f);
         }
     }
 }
