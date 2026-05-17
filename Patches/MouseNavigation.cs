@@ -44,7 +44,8 @@ namespace xsoverlay_tweak.Patches
             XConfig.MouseNavigation.SettingChanged += (sender, args) =>
             {
                 if (IsEnable())
-                    ApplySteamVRActionBinding();
+                    if (ApplySteamVRActionBinding())
+                        Utils.Notification.Send("XSOverlay Tweak - Mouse Navigation", $"When enabling Mouse Navigation for the first time, you have to restart XSOverlay to take effect.", 10);
             };
         }
 
@@ -121,7 +122,7 @@ namespace xsoverlay_tweak.Patches
                 sim.Mouse.XButtonClick(2);
         }
 
-        private static void ApplySteamVRActionBinding()
+        private static bool ApplySteamVRActionBinding()
         {
             string filePath = @".\XSOverlay_Data\StreamingAssets\SteamVR\actions.json";
 
@@ -173,6 +174,8 @@ namespace xsoverlay_tweak.Patches
                 File.WriteAllText(filePath, root.ToString(Formatting.Indented));
                 Console.WriteLine("Manifest updated with actions and localization.");
             }
+
+            return modified;
         }
 
         private static bool IsEnable()
